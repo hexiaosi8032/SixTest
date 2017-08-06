@@ -54,7 +54,7 @@ func scaleY(y:CGFloat) -> CGFloat {
     return y * sizeHeightScale
     
 }
-
+ 
 func UIColorFromRGB(rgbValue:Int) -> UIColor {
     
     let r = (rgbValue >> 16) & 0xFF;

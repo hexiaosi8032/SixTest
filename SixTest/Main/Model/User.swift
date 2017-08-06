@@ -14,6 +14,7 @@ class User: NSObject {
     var userName:String?
     var userID:String?
     var publishDateNo:String?
+    var AESKey:String?
     
     static let instance:User = User()
     class func sharedInstance() -> User {

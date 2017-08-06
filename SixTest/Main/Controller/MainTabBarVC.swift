@@ -21,7 +21,7 @@ class MainTabBarVC: UITabBarController {
         addChildViewController(HomeVC(), title: "六合彩", imageName: "首页_未选中", selectImageName: "首页_选中")
         addChildViewController(DataAnalysisVC(), title: "资料库", imageName: "资料_未选中", selectImageName: "资料_选中")
         addChildViewController(EntertainmentVC(), title: "娱乐区", imageName: "娱乐_未选中", selectImageName: "娱乐_选中")
-        addChildViewController(MeVC(), title: "我的", imageName: "我的_未选中", selectImageName: "我的_选中")
+        addChildViewController(LoginVC(), title: "我的", imageName: "我的_未选中", selectImageName: "我的_选中")
     }
     
     func addChildViewController(_ childVC: UIViewController,title:String,imageName:String,selectImageName:String) {

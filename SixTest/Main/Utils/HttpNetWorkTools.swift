@@ -65,8 +65,9 @@ class HttpNetWorkTools: NSObject {
             
             let model = HttpModel()
             model.setValuesForKeys(JSON)
-            
-            success(model)
+            if model.statusCode == "SUCCESS"{
+                success(model)
+            }
             SVProgressHUD.dismiss()
         }) { (task:URLSessionDataTask?, error:Error) in
             failure(error)

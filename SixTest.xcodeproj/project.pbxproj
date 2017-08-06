@@ -42,6 +42,10 @@
 		8875B2DD1EE112B800638A11 /* HttpModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8875B2DC1EE112B800638A11 /* HttpModel.swift */; };
 		8875B2DF1EE114C400638A11 /* HistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8875B2DE1EE114C400638A11 /* HistoryModel.swift */; };
 		8875B2E31EE131D600638A11 /* HistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8875B2E21EE131D600638A11 /* HistoryCell.swift */; };
+		8878102E1F348AE5004B2525 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8878102C1F348AE5004B2525 /* LoginVC.swift */; };
+		8878102F1F348AE5004B2525 /* LoginVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8878102D1F348AE5004B2525 /* LoginVC.xib */; };
+		8878109F1F356CF1004B2525 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8878109E1F356CF1004B2525 /* TestViewController.m */; };
+		887810A51F356F99004B2525 /* aViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 887810A41F356F99004B2525 /* aViewController.m */; };
 		8881744A1F2EBD55003F1B2E /* DataAnalysisViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888174491F2EBD55003F1B2E /* DataAnalysisViewModel.swift */; };
 		8881744C1F2EC262003F1B2E /* DataYypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8881744B1F2EC262003F1B2E /* DataYypeCell.swift */; };
 		888174501F2ECFA4003F1B2E /* DataTypeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8881744F1F2ECFA4003F1B2E /* DataTypeModel.swift */; };
@@ -170,6 +174,12 @@
 		8875B2DC1EE112B800638A11 /* HttpModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpModel.swift; sourceTree = "<group>"; };
 		8875B2DE1EE114C400638A11 /* HistoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryModel.swift; sourceTree = "<group>"; };
 		8875B2E21EE131D600638A11 /* HistoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryCell.swift; sourceTree = "<group>"; };
+		8878102C1F348AE5004B2525 /* LoginVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
+		8878102D1F348AE5004B2525 /* LoginVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginVC.xib; sourceTree = "<group>"; };
+		8878109D1F356CF1004B2525 /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
+		8878109E1F356CF1004B2525 /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
+		887810A31F356F99004B2525 /* aViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aViewController.h; sourceTree = "<group>"; };
+		887810A41F356F99004B2525 /* aViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = aViewController.m; sourceTree = "<group>"; };
 		888174491F2EBD55003F1B2E /* DataAnalysisViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataAnalysisViewModel.swift; sourceTree = "<group>"; };
 		8881744B1F2EC262003F1B2E /* DataYypeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataYypeCell.swift; sourceTree = "<group>"; };
 		8881744F1F2ECFA4003F1B2E /* DataTypeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataTypeModel.swift; sourceTree = "<group>"; };
@@ -628,6 +638,8 @@
 				88C86D9A1EDBBA8000D0162D /* ViewController.swift */,
 				88C86DF71EDBEBB000D0162D /* PrefixHeader.swift */,
 				888DE1C31EF0D07300C219AA /* OCHeader.h */,
+				887810A31F356F99004B2525 /* aViewController.h */,
+				887810A41F356F99004B2525 /* aViewController.m */,
 				88C86D9C1EDBBA8000D0162D /* Main.storyboard */,
 				88C86D9F1EDBBA8000D0162D /* Assets.xcassets */,
 				88C86DA11EDBBA8000D0162D /* LaunchScreen.storyboard */,
@@ -911,6 +923,8 @@
 				88BA7BD01EE0114000FEF9E7 /* HttpDataManager.swift */,
 				8875B2D01EE02B5300638A11 /* DataService.swift */,
 				881F7AC81EE248FE0060274F /* AlertViewUtil.swift */,
+				8878109D1F356CF1004B2525 /* TestViewController.h */,
+				8878109E1F356CF1004B2525 /* TestViewController.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -944,6 +958,8 @@
 			isa = PBXGroup;
 			children = (
 				88C86DF01EDBC5F500D0162D /* MeVC.swift */,
+				8878102C1F348AE5004B2525 /* LoginVC.swift */,
+				8878102D1F348AE5004B2525 /* LoginVC.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1183,6 +1199,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8878102F1F348AE5004B2525 /* LoginVC.xib in Resources */,
 				88C86DA31EDBBA8000D0162D /* LaunchScreen.storyboard in Resources */,
 				88C86DA01EDBBA8000D0162D /* Assets.xcassets in Resources */,
 				88C696E91F2EFEA800013166 /* CommentVC.xib in Resources */,
@@ -1273,6 +1290,7 @@
 				888DE19F1EF0CE6C00C219AA /* KSixType.swift in Sources */,
 				882F1DC11EF2A31700543264 /* SearchZhuangjiaCell.swift in Sources */,
 				888DE1BF1EF0D01100C219AA /* ZhuanjiaXinshuiVC.swift in Sources */,
+				8878109F1F356CF1004B2525 /* TestViewController.m in Sources */,
 				88741F531F01E55E00D87AC0 /* HintsBBSWriteVC.swift in Sources */,
 				882BB32D1F06465A008DA70A /* JiangShangChidVC.swift in Sources */,
 				88F96B5A1EDFB68F0017D059 /* HomeResultView.swift in Sources */,
@@ -1336,6 +1354,7 @@
 				88C697171F30618A00013166 /* CommentFrameModel.swift in Sources */,
 				882F1DBD1EF2811800543264 /* SearchZhuangjiaVC.swift in Sources */,
 				88F96B691EDFC11B0017D059 /* NSMutableAttributedString+Extension.swift in Sources */,
+				8878102E1F348AE5004B2525 /* LoginVC.swift in Sources */,
 				882F1E091EF4C95F00543264 /* ZhuangjiaCell.swift in Sources */,
 				882F1DFE1EF3F79900543264 /* LookZhuangjiaTopView.swift in Sources */,
 				88C86E1A1EDC32BB00D0162D /* HomeViewModel.swift in Sources */,
@@ -1346,6 +1365,7 @@
 				882F1DC31EF2DF1300543264 /* User.swift in Sources */,
 				88F96B6B1EDFC5FD0017D059 /* UIView+Extension.swift in Sources */,
 				88C696F71F2F40DD00013166 /* ReplyModel.swift in Sources */,
+				887810A51F356F99004B2525 /* aViewController.m in Sources */,
 				88C86D991EDBBA8000D0162D /* AppDelegate.swift in Sources */,
 				8875B2DD1EE112B800638A11 /* HttpModel.swift in Sources */,
 				88C86E1C1EDC343000D0162D /* UrlConstants.swift in Sources */,
@@ -1513,12 +1533,17 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = YUB662KJD7;
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = SixTest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/SixTest/Main/Lib/OC/openssl",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "---.SixTest";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/imac/Desktop/工作代码区/SixTest/SixTest/OCHeader.h";
+				SWIFT_OBJC_BRIDGING_HEADER = SixTest/OCHeader.h;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
@@ -1531,12 +1556,17 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = YUB662KJD7;
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = SixTest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/SixTest/Main/Lib/OC/openssl",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "---.SixTest";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/imac/Desktop/工作代码区/SixTest/SixTest/OCHeader.h";
+				SWIFT_OBJC_BRIDGING_HEADER = SixTest/OCHeader.h;
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

@@ -11,6 +11,11 @@ import UIKit
     //默认服务器
     var kDefaultDomain:String       = "http://192.168.0.140:6060";
 
+    // MARK: 个人中心 加密通讯分派接口
+    let kAPIGatewayPort = "/mobile/api_gateway/request"
+    // MARK: 个人中心
+    let kGenerateAESKeyPort = "/mobile/api_gateway/generateUserKey"
+
     // MARK: 历史开奖模块接口
     //专家心水列表
     let kProfessionalHintsListPort = "/mobile/recommend/get_recommend_records_date"

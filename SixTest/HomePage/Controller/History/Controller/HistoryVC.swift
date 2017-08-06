@@ -81,7 +81,7 @@ class HistoryVC: UIViewController {
         let url = kQueryHistoryRecordPort;
         var parameters = [String:Any]()
         parameters["publishDateNo"] = timeString
-       
+        
         HttpNetWorkTools.shareNetWorkTools().postAFNHttp(urlStr: url, parameters: parameters, success: {
             [weak self]
             (httpModel:HttpModel) in
