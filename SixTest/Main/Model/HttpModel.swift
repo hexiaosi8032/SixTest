@@ -13,6 +13,7 @@ class HttpModel: NSObject {
     var data:AnyObject?
     var statusCode:String?
     var error:Error?
+    var message:String?
     
     override func setValue(_ value: Any?, forUndefinedKey key: String) {
         

@@ -17,6 +17,14 @@ class User: NSObject {
     var AESKey:String?
     
     static let instance:User = User()
+    func clean() -> () {
+        isLogin = false
+        userName = nil
+        userID = nil
+        publishDateNo = nil
+        AESKey = nil
+    }
+    
     class func sharedInstance() -> User {
         return instance
     }

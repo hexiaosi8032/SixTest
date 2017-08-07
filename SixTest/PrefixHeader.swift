@@ -39,6 +39,8 @@ let ScreenHeight  = UIScreen.main.bounds.size.height
 
 let NavBarHeight:CGFloat = 64
 let TabBarHeight:CGFloat = 49
+//AES加密向量
+let AES_IV = "1234567890123456".data(using: .utf8)
 
 func scaleX(x:CGFloat) -> CGFloat {
     

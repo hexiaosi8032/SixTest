@@ -41,13 +41,19 @@ class LoginVC: UIViewController {
     func loadAESData() -> () {
         let url = kGenerateAESKeyPort;
         var parameters = [String:Any]()
-        parameters["rsaPublicKey"] =   ""
-        ROTAHeader()
+    
+        parameters["rsaPublicKey"] = RSAHelper.shareInstance().getPublishKey()
+       
         HttpNetWorkTools.shareNetWorkTools().postAFNHttp(urlStr: url, parameters: parameters, success: {
             [weak self]
             (httpModel:HttpModel) in
             
+            let AESKey = RSAHelper.shareInstance().decrypted(httpModel.data! as! String)
+            User.sharedInstance().AESKey = AESKey
+        
             print(httpModel.data!)
+            
+            self?.loadLoginData()
             
             
         }) { (error:Error) in
@@ -58,13 +64,15 @@ class LoginVC: UIViewController {
     func loadLoginData() -> () {
         let url = kAPIGatewayPort;
         var parameters = [String:Any]()
-//        parameters["kGenerateAESKeyPort"] = User.sharedInstance().AESKey
+        parameters["operationType"] = "USER_LOGIN"
+        parameters["userName"] = "15915333822"
+        parameters["password"]   = "yan123456"
         
         HttpNetWorkTools.shareNetWorkTools().postAFNHttp(urlStr: url, parameters: parameters, success: {
             [weak self]
             (httpModel:HttpModel) in
             
-            
+            print(httpModel.data!)
             
         }) { (error:Error) in
             print(error)

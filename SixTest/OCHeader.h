@@ -11,5 +11,5 @@
 
 #import "MainTitleStyleVC.h"
 #import "UILabel+YBAttributeTextTapAction.h"
-#import "aViewController.h"
+#import "Secret.h"
 #endif /* OCHeader_h */
