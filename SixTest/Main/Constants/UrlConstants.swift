@@ -11,11 +11,6 @@ import UIKit
     //默认服务器
     var kDefaultDomain:String       = "http://192.168.0.140:6060";
 
-    // MARK: 个人中心 加密通讯分派接口
-    let kAPIGatewayPort = "/mobile/api_gateway/request"
-    // MARK: 个人中心
-    let kGenerateAESKeyPort = "/mobile/api_gateway/generateUserKey"
-
     // MARK: 历史开奖模块接口
     //专家心水列表
     let kProfessionalHintsListPort = "/mobile/recommend/get_recommend_records_date"
@@ -69,4 +64,12 @@ import UIKit
     let kDataHotListPort            = "/mobile/free_info/get_freeinfo_hits_list"
     //资料类别列表
     let kDataTypeListPort           = "/mobile/free_info/get_freeinfo_type_list"
- 
+
+    // MARK: 个人中心 加密通讯分派接口
+    let kAPIGatewayPort = "/mobile/api_gateway/request"
+    // MARK: 个人中心
+    let kGenerateAESKeyPort = "/mobile/api_gateway/generateUserKey"
+    //发布帖子
+    let kAPIGateWaySubmitBBSTopic = "UPDATE_TOPIC"
+    //回复保存 帖子／评论
+    let kAPIReplyCommentTopic = "REPLY_TOPIC"

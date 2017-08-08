@@ -21,11 +21,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = MainTabBarVC()
         window?.makeKeyAndVisible()
         
+        if let dic = UserDefaults().object(forKey: "user") {
+            User.sharedInstance().setValuesForKeys(dic as! [String : Any])
+        }
+        
         //模拟用户
-        let user = User.sharedInstance()
-        user.userName = "15915333883"
-        user.isLogin  = true
-        user.userID = "286"
+//        let user = User.sharedInstance()
+//        user.userName = "15915333883"
+//        user.isLogin  = true
+//        user.userID = "286"
         return true
     }
 

@@ -48,7 +48,7 @@ class CommentCell: UITableViewCell {
                 professorLabel.isHidden = true
             }
             
-            floorLabel.text = "1楼"
+//            floorLabel.text = "1楼"
             timeLabel.text = model?.listModel?.displayReplyTime
             contenLabel.text = model?.listModel?.reply?.content
             
@@ -71,7 +71,10 @@ class CommentCell: UITableViewCell {
                         else {
                         return
                     }
-                    weakself.commentCelldelegate?.click(cell: weakself, view: label)
+                    if int == 0 {
+                         weakself.commentCelldelegate?.click(cell: weakself, view: label)
+                    }
+                    
                     print("点击了\(string ?? "")标签 - {\(range.location) , \(range.length)} - \(int)")
                 })
             }else{
@@ -99,7 +102,10 @@ class CommentCell: UITableViewCell {
                         else {
                             return
                     }
-                    weakself.commentCelldelegate?.click(cell: weakself, view: label)
+                    if int == 0 {
+                        weakself.commentCelldelegate?.click(cell: weakself, view: label)
+                    }
+    
                     print("点击了\(string ?? "")标签 - {\(range.location) , \(range.length)} - \(int)")
                 })
 

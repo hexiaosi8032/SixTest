@@ -17,6 +17,7 @@ class ReplyModel: NSObject {
     var replyTime:String?
     var replyer:String?
     var type:String?
+    var parentTopicId:String?
     
     override static func mj_replacedKeyFromPropertyName() -> [AnyHashable : Any]! {
         return ["ID" : "id"]

@@ -107,6 +107,10 @@
 		88CC9D881EFCFC8B006B49BF /* HintsBBSModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CC9D871EFCFC8B006B49BF /* HintsBBSModel.swift */; };
 		88CC9D8A1EFD29C5006B49BF /* HintsBBSContentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CC9D891EFD29C4006B49BF /* HintsBBSContentVC.swift */; };
 		88CC9D8C1EFDF484006B49BF /* NSString-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CC9D8B1EFDF484006B49BF /* NSString-Extension.swift */; };
+		88CDCDA51F387B1F00CFA3D5 /* CommentDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CDCDA41F387B1F00CFA3D5 /* CommentDetailCell.swift */; };
+		88CDCDA71F387B8800CFA3D5 /* CommentDeailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CDCDA61F387B8800CFA3D5 /* CommentDeailModel.swift */; };
+		88CDCDA91F387CED00CFA3D5 /* CommetDeailFrameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CDCDA81F387CED00CFA3D5 /* CommetDeailFrameModel.swift */; };
+		88CDCDAB1F387DFC00CFA3D5 /* CommentDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CDCDAA1F387DFC00CFA3D5 /* CommentDetailVC.swift */; };
 		88F3848B1EF8F6DD00F2D693 /* ZhuanjiaHistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F3848A1EF8F6DD00F2D693 /* ZhuanjiaHistoryCell.swift */; };
 		88F3848D1EF8F9D600F2D693 /* ZhuangjiaCurrentHistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F3848C1EF8F9D600F2D693 /* ZhuangjiaCurrentHistoryModel.swift */; };
 		88F3848F1EF90A9A00F2D693 /* LookZhuangjiaHistoryListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F3848E1EF90A9A00F2D693 /* LookZhuangjiaHistoryListVC.swift */; };
@@ -339,6 +343,10 @@
 		88CC9D871EFCFC8B006B49BF /* HintsBBSModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HintsBBSModel.swift; sourceTree = "<group>"; };
 		88CC9D891EFD29C4006B49BF /* HintsBBSContentVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HintsBBSContentVC.swift; sourceTree = "<group>"; };
 		88CC9D8B1EFDF484006B49BF /* NSString-Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSString-Extension.swift"; sourceTree = "<group>"; };
+		88CDCDA41F387B1F00CFA3D5 /* CommentDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentDetailCell.swift; sourceTree = "<group>"; };
+		88CDCDA61F387B8800CFA3D5 /* CommentDeailModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentDeailModel.swift; sourceTree = "<group>"; };
+		88CDCDA81F387CED00CFA3D5 /* CommetDeailFrameModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommetDeailFrameModel.swift; sourceTree = "<group>"; };
+		88CDCDAA1F387DFC00CFA3D5 /* CommentDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentDetailVC.swift; sourceTree = "<group>"; };
 		88F3848A1EF8F6DD00F2D693 /* ZhuanjiaHistoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZhuanjiaHistoryCell.swift; sourceTree = "<group>"; };
 		88F3848C1EF8F9D600F2D693 /* ZhuangjiaCurrentHistoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZhuangjiaCurrentHistoryModel.swift; sourceTree = "<group>"; };
 		88F3848E1EF90A9A00F2D693 /* LookZhuangjiaHistoryListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LookZhuangjiaHistoryListVC.swift; sourceTree = "<group>"; };
@@ -901,6 +909,7 @@
 				888174511F2ED8C5003F1B2E /* DataHtmlVC.swift */,
 				88C696E61F2EFEA800013166 /* CommentVC.swift */,
 				88C696E71F2EFEA800013166 /* CommentVC.xib */,
+				88CDCDAA1F387DFC00CFA3D5 /* CommentDetailVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -915,6 +924,8 @@
 				88C696FE1F2F41B900013166 /* ChildReplyListModel.swift */,
 				88C696F61F2F40DD00013166 /* ReplyModel.swift */,
 				88C697001F2F46AE00013166 /* ReplyerModel.swift */,
+				88CDCDA61F387B8800CFA3D5 /* CommentDeailModel.swift */,
+				88CDCDA81F387CED00CFA3D5 /* CommetDeailFrameModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -941,6 +952,7 @@
 				889CF74C1F2B0D4B0074394B /* HotDataCell.swift */,
 				8881744B1F2EC262003F1B2E /* DataYypeCell.swift */,
 				88C697101F305ADE00013166 /* CommentCell.swift */,
+				88CDCDA41F387B1F00CFA3D5 /* CommentDetailCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1498,6 +1510,7 @@
 				88F3848D1EF8F9D600F2D693 /* ZhuangjiaCurrentHistoryModel.swift in Sources */,
 				88C86E001EDBFA7D00D0162D /* HttpNetWorkTools.swift in Sources */,
 				882F1E291EF7C21A00543264 /* BallsView.swift in Sources */,
+				88CDCDA91F387CED00CFA3D5 /* CommetDeailFrameModel.swift in Sources */,
 				88C696ED1F2F01B800013166 /* XSInputView.swift in Sources */,
 				88C86DEF1EDBC5EA00D0162D /* DataAnalysisVC.swift in Sources */,
 				8881744A1F2EBD55003F1B2E /* DataAnalysisViewModel.swift in Sources */,
@@ -1510,6 +1523,7 @@
 				882F1DC11EF2A31700543264 /* SearchZhuangjiaCell.swift in Sources */,
 				888DE1BF1EF0D01100C219AA /* ZhuanjiaXinshuiVC.swift in Sources */,
 				887811051F37F82C004B2525 /* NSData+AES.m in Sources */,
+				88CDCDA51F387B1F00CFA3D5 /* CommentDetailCell.swift in Sources */,
 				8878109F1F356CF1004B2525 /* TestViewController.m in Sources */,
 				88741F531F01E55E00D87AC0 /* HintsBBSWriteVC.swift in Sources */,
 				882BB32D1F06465A008DA70A /* JiangShangChidVC.swift in Sources */,
@@ -1517,8 +1531,10 @@
 				88F3848F1EF90A9A00F2D693 /* LookZhuangjiaHistoryListVC.swift in Sources */,
 				882F1E201EF7AEEB00543264 /* LookZhuangjiaCurrentContenVC.swift in Sources */,
 				88C696EF1F2F239D00013166 /* CommentViewModel.swift in Sources */,
+				88CDCDA71F387B8800CFA3D5 /* CommentDeailModel.swift in Sources */,
 				882F1E081EF4C95F00543264 /* LookZhuangjiaNowCell.swift in Sources */,
 				88F96B6E1EDFF79B0017D059 /* HomeListIconView.swift in Sources */,
+				88CDCDAB1F387DFC00CFA3D5 /* CommentDetailVC.swift in Sources */,
 				888DE1C81EF0D52E00C219AA /* ZhuanjiaXinshuiChidVC.swift in Sources */,
 				8875B2DF1EE114C400638A11 /* HistoryModel.swift in Sources */,
 				8875B2E31EE131D600638A11 /* HistoryCell.swift in Sources */,

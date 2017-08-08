@@ -15,15 +15,18 @@ class CommentViewModel: NSObject {
     var superVC:UIViewController?
     var dataArr = [CommentFrameModel]()
     var tabelView:UITableView?
-    
+    var inputButton:UIButton?
     var inputView:XSInputView?
+    var isClickTag:Int = 1000
+    var parentTopicId:String?
+    var replyTo:String?
     
     //回复-主回复查询
     func loadMainReplyData() -> () {
         
         let url = kReplyMainQuery;
         var parameters = [String:Any]()
-        parameters["type"] = "RECOMMEND"
+        parameters["type"] = "INFO"
         parameters["rootTopicId"] = idStr
         parameters["mainPageNum"] = pageNum
         parameters["mainPageSize"] = (6)
@@ -38,13 +41,17 @@ class CommentViewModel: NSObject {
                     return
             }
             print(responseObject)
+            if self?.pageNum == 1 {
+                self?.dataArr.removeAll()
+            }
+            
             let arr:[ReplyListModel] = ReplyListModel.mj_objectArray(withKeyValuesArray: responseObject["list"]) as! [ReplyListModel]
             for replyListModel in arr{
                 let model = CommentFrameModel()
                 model.listModel = replyListModel
                 self?.dataArr.append(model)
-                self?.tabelView?.reloadData()
             }
+            self?.tabelView?.reloadData()
             
         }) { (error:Error) in
             print(error)
@@ -52,12 +59,56 @@ class CommentViewModel: NSObject {
         
     }
     
+    //提交评论
+    func saveReplyData() -> () {
+        
+        let url = kAPIGatewayPort;
+        var parameters = [String:Any]()
+        parameters["userName"] = User.sharedInstance().userName
+        parameters["type"] = "INFO"
+        parameters["rootTopicId"] = idStr
+        parameters["content"] = inputView?.text
+        parameters["operationType"] = kAPIReplyCommentTopic
+        //评论
+        if isClickTag == 1000 {
+            
+        }
+        //发布按钮
+        else if  isClickTag == 1001{
+            parameters["parentTopicId"] = parentTopicId!
+        }
+        //回复
+        else{
+            parameters["replyTo"] = replyTo!
+            parameters["parentTopicId"] = parentTopicId!
+        }
+        
+        HttpNetWorkTools.shareNetWorkTools().postAFNHttp(urlStr: url, parameters: parameters, success: {
+            [weak self]
+            (httpModel:HttpModel) in
+            
+            guard let responseObject = httpModel.data as? NSDictionary
+                else{
+                    return
+            }
+            print(responseObject)
+            
+            self?.loadMainReplyData()
+            
+        }) { (error:Error) in
+            print(error)
+        }
+        
+    }
+
+    
 }
 
-extension CommentViewModel:UITableViewDelegate,UITableViewDataSource,CommentCelldelegate{
+extension CommentViewModel:UITableViewDelegate,UITableViewDataSource,CommentCelldelegate,UITextViewDelegate{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = CommentCell.cellWithTableView(tableView)
+        cell.floorLabel.text = "\(indexPath.row)楼"
         cell.model = dataArr[indexPath.row]
         cell.commentCelldelegate = self
         return cell
@@ -85,6 +136,10 @@ extension CommentViewModel:UITableViewDelegate,UITableViewDataSource,CommentCell
         inputView?.resignFirstResponder()
     }
     
+    func textViewDidEndEditing(_ textView: UITextView) {
+        inputButton?.isHidden = false
+    }
+    
     func click(cell: CommentCell, view: AnyObject) {
         //得到当前点击按钮所在位置
         guard let indexPath = tabelView?.indexPath(for: cell),
@@ -92,16 +147,42 @@ extension CommentViewModel:UITableViewDelegate,UITableViewDataSource,CommentCell
             else {
             return
         }
+        if !User.sharedInstance().isLogin {
+            let vc = LoginViewController()
+            superVC?.navigationController?.pushViewController(vc, animated: true)
+            return
+        }
         print("内容为\(model.reply?.content ?? "")")
         if view.isKind(of: UIButton.self) {
             print("点击了按钮")
+            isClickTag = 1001
+            parentTopicId = model.reply?.ID
             inputView?.becomeFirstResponder()
         }else if view.isKind(of: UILabel.self){
             if view.tag == 10 {
                 print("点击了回复1")
+                inputView?.becomeFirstResponder()
+                isClickTag = 1002
+                parentTopicId = model.childReplyList?[0].reply?.parentTopicId
+                replyTo = model.childReplyList?[0].replyer?.ID
             }else if view.tag == 11{
+                inputView?.becomeFirstResponder()
+                parentTopicId = model.childReplyList?[1].reply?.parentTopicId
+                replyTo = model.childReplyList?[1].replyer?.ID
+                isClickTag = 1002
                 print("点击了回复2")
             }else if view.tag == 12{
+                let vc = CommentDetailVC()
+                vc.rootTopicId = self.idStr
+                vc.parentTopicId = model.reply?.ID
+                vc.imgStr = model.replyerHeadPortraitFullPath
+                vc.nameStr = model.replyer?.nickName
+                vc.userRole = model.replyer?.userRole
+                vc.content = model.reply?.content
+                vc.foolStr = "\(indexPath.row)楼"
+                vc.timeStr = model.displayReplyTime
+                vc.replyType = "INFO"
+                superVC?.navigationController?.pushViewController(vc, animated: true)
                 print("点击了总")
             }
         }else if view.isKind(of: UIImageView.self){

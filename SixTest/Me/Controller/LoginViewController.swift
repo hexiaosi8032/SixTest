@@ -60,9 +60,7 @@ class LoginViewController: UIViewController {
         
     }
     
-    deinit {
-        print("PickView销毁")
-    }
+    
     // MARK: 自定义方法
     func setupUI() -> () {
         title = "登录"
@@ -129,7 +127,17 @@ class LoginViewController: UIViewController {
                 self?.loadLoginData()
                 return
             }
+            print(httpModel.data ?? "")
             
+            User.sharedInstance().setValuesForKeys(httpModel.data as! [String : Any])
+            User.sharedInstance().isLogin = true
+            
+            var dic = httpModel.data as! [String:Any]
+            dic["isLogin"] = (true)
+            let defaul = UserDefaults()
+            defaul.set(dic, forKey: "user")
+            defaul.synchronize()
+ 
             if ((self?.navigationController) != nil) {
                 self?.navigationController?.popViewController(animated: true)
             }else{

@@ -68,9 +68,9 @@ class HttpNetWorkTools: NSObject {
             
             let model = HttpModel()
             model.setValuesForKeys(JSON)
-            //加密
+            //解密
             if (parameters["operationType"] != nil) {
-                model.data = self?.encrypted(parameters: JSON) as AnyObject
+                model.data = self?.decrypted(jsonString: JSON["data"] as! String) as AnyObject
             }
             
             if model.statusCode == "SUCCESS"{
@@ -84,7 +84,7 @@ class HttpNetWorkTools: NSObject {
             //需要重新登录
             else if model.statusCode == "USER_KEY_EXPIRE"{
                 User.sharedInstance().clean()
-                AlertViewUtil.alertShow(warnString: "提示", message: "session失效,请重新登录!", controller: nil, confirmTitle: "", cancleTitie: "取消", confirmBlock: {
+                AlertViewUtil.alertShow(warnString: "提示", message: "session失效,请重新登录!", controller: nil, confirmTitle: "确定", cancleTitie: "取消", confirmBlock: {
                     let loginVC = LoginViewController()
                     loginVC.block = {
                         success(model)
@@ -126,26 +126,15 @@ class HttpNetWorkTools: NSObject {
     }
     
     //解密
-    func decrypted(parameters:[String:Any]) -> ([String:Any]) {
-        var dic = [String:Any]()
-        var parameters = parameters
+    func decrypted(jsonString:String) -> (Any) {
+      
+        let decryptedString = NSString(string: jsonString).decryptedWithAES(usingKey: User.sharedInstance().AESKey, andIV: AES_IV)
         
-        for (key,value) in parameters {
-            if key != "operationType" {
-                dic[key] = value
-                parameters.removeValue(forKey: key)
-            }
-        }
-        guard let data =  try? JSONSerialization.data(withJSONObject: dic, options: []) else {
-            print("加密json失败")
-            return [:]
+        guard let jsonData = try? JSONSerialization.jsonObject(with: (decryptedString?.data(using: .utf8))!, options: .allowFragments) else {
+            return ""
         }
         
-        let jsonStr = String(data: data, encoding: .utf8) ?? ""
-        let secretStr = NSString(string: jsonStr).encryptedWithAES(usingKey: User.sharedInstance().AESKey, andIV: AES_IV)
-        parameters["requestData"] = secretStr
-        
-        return parameters
+        return jsonData
     }
     
     

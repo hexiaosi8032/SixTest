@@ -10,11 +10,12 @@ import UIKit
 
 class User: NSObject {
 
-    var isLogin:Bool?
+    var isLogin:Bool = false
     var userName:String?
     var userID:String?
     var publishDateNo:String?
     var AESKey:String?
+    var userRole:String?
     
     static let instance:User = User()
     func clean() -> () {
@@ -27,6 +28,10 @@ class User: NSObject {
     
     class func sharedInstance() -> User {
         return instance
+    }
+    
+    override func setValue(_ value: Any?, forUndefinedKey key: String) {
+        
     }
     
 }

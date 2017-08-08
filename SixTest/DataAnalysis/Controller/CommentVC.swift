@@ -15,7 +15,14 @@ class CommentVC: UIViewController {
     @IBOutlet weak var InputView: XSInputView!
     @IBOutlet weak var tabelView: UITableView!
     
+    @IBOutlet weak var InputButton: UIButton!
     var idStr:String = ""
+    var headView:UIView? {
+        didSet{
+            tabelView.tableHeaderView = headView
+        }
+    }
+    
     // MARK: 懒加载
     lazy var viewModel:CommentViewModel = {
         let viewModel = CommentViewModel()
@@ -24,6 +31,7 @@ class CommentVC: UIViewController {
         viewModel.tabelView = self.tabelView
         viewModel.superVC = self
         viewModel.inputView = self.InputView
+        viewModel.inputButton = self.InputButton
         return viewModel
     }()
  
@@ -34,7 +42,6 @@ class CommentVC: UIViewController {
         setupUI()
         
         viewModel.loadMainReplyData()
-        
     }
     
     // MARK: 自定义方法
@@ -45,9 +52,11 @@ class CommentVC: UIViewController {
         
         tabelView.dataSource = viewModel
         tabelView.delegate = viewModel
+        tabelView.tableFooterView = UIView(frame: CGRect.zero)
         tabelView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0)
         
         InputView.backgroundColor = UIColorFromRGB(rgbValue: kBackGroundColor)
+        InputView.delegate = viewModel
         InputView.placeholder = "写几句吧"
         InputView.placeholderColor = UIColor.lightGray
         
@@ -84,8 +93,18 @@ class CommentVC: UIViewController {
     // MARK: Target方法
     
     @IBAction func commit(_ sender: Any) {
+        if InputView.text.characters.count == 0 {
+            return
+        }
+        viewModel.saveReplyData()
         InputView.text = nil
         InputView.textDidChange()
+    }
+    
+    @IBAction func inputBtnClick(_ sender: Any) {
+        viewModel.isClickTag = 1000
+        InputButton.isHidden = true
+        InputView.becomeFirstResponder()
     }
     // MARK: HTTP请求
     
