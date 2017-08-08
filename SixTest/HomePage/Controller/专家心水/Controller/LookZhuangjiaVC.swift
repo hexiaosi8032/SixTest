@@ -91,7 +91,6 @@ class LookZhuangjiaVC: UIViewController {
         var parameters          = [String:Any]()
         parameters["userid"]  = userid//当前登录用户
         
- 
         HttpNetWorkTools.shareNetWorkTools().postAFNHttp(urlStr: url, parameters: parameters, success: {
             [weak self]
             (httpModel:HttpModel) in
@@ -119,17 +118,22 @@ class LookZhuangjiaVC: UIViewController {
     //查询是否已经被关注
     func getCheckIsAlreadyFollowedDatasAction() -> () {
         
-        let url = kCheckIsFollowPort;
+        let url = kAPIGatewayPort;
         var parameters          = [String:Any]()
-        parameters["userId"]  = User.sharedInstance().userID//当前登录用户
+        parameters["operationType"] = "QUERY_USER_CAREFOR"
+        parameters["userId"]  = User.sharedInstance().userID!//当前登录用户
         parameters["toUserId"]  = userid
-        
+        print(parameters)
         HttpNetWorkTools.shareNetWorkTools().postAFNHttp(urlStr: url, parameters: parameters, success: {
             [weak self]
             (httpModel:HttpModel) in
+            //登录后回调
+            if httpModel.statusCode == "USER_KEY_EXPIRE"{
+                self?.getCheckIsAlreadyFollowedDatasAction()
+                return
+            }
             
             self?.topView.isfollowed = httpModel.data as? String
-            
             
         }) { (error:Error) in
             print(error)

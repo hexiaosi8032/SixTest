@@ -31,7 +31,10 @@ class User: NSObject {
     }
     
     override func setValue(_ value: Any?, forUndefinedKey key: String) {
-        
+        if key == "id"{
+            userID = String(describing: value!)
+        }
+
     }
     
 }

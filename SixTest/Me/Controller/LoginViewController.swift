@@ -60,7 +60,16 @@ class LoginViewController: UIViewController {
         
     }
     
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.navigationBar.isHidden = true
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.navigationBar.isHidden = false
+    }
     // MARK: 自定义方法
     func setupUI() -> () {
         title = "登录"
@@ -74,6 +83,22 @@ class LoginViewController: UIViewController {
         passWdF.frame = CGRect(x: 60, y: userNameF.bottom + 30, width: ScreenWidth - 120, height: 30)
         loginBtn.frame = CGRect(x: 100, y: passWdF.bottom + 30, width: ScreenWidth - 200, height: 30)
         
+        let headBgView = UIView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: 64))
+        headBgView.backgroundColor = UIColor.red
+        view.addSubview(headBgView)
+        
+        let titleLabel = UILabel(frame: CGRect(x: (ScreenWidth - 100) / 2, y: 20, width: 100, height: 44))
+        titleLabel.text = title
+        titleLabel.font = adoptedFont(fontSize: 18)
+        titleLabel.textColor = UIColorFromRGB(rgbValue: kBlackFontColor)
+        headBgView.addSubview(titleLabel)
+        
+        let button = UIButton(type: .custom)
+        button.frame = CGRect(x: 10, y: 30, width: 40, height: 24)
+        button.setImage(UIImage(named: "返回"), for: .normal)
+        button.addTarget(self, action: #selector(backClick), for: .touchUpInside)
+        headBgView.addSubview(button)
+        
     }
     
     // MARK: Target方法
@@ -85,6 +110,15 @@ class LoginViewController: UIViewController {
         }
         
         loadLoginData()
+    }
+    
+    func backClick() -> () {
+        if (navigationController != nil) {
+            navigationController?.popViewController(animated: true)
+        }else{
+            dismiss(animated: true, completion: nil)
+        }
+        
     }
     
     // MARK: HTTP请求

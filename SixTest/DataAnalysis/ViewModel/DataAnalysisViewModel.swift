@@ -139,6 +139,10 @@ extension DataAnalysisViewModel:UICollectionViewDataSource,UICollectionViewDeleg
             let vc = CommentVC()
             vc.idStr = model.ID ?? "";
             vc.title = "详情\(model.typeName ?? "")"
+            let head = UIView()
+            head.frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: 200)
+            head.backgroundColor = UIColor.red
+            vc.headView = head
             superVC?.navigationController?.pushViewController(vc, animated: true)
         }
     }

@@ -105,6 +105,13 @@ extension ZhuanjiaXinshuiChidVC:UITableViewDelegate,UITableViewDataSource,SixHea
     
     
     func click(cell: ZhuangjiaCell, btn: UIButton) {
+        if !User.sharedInstance().isLogin {
+            let vc = LoginViewController()
+            let nav = DataService.getSuperNav(controller: self)
+            nav.pushViewController(vc, animated: true)
+            return
+        }
+        
         //得到当前点击按钮所在位置
         let indexPath = myTabelView.indexPath(for: cell)
         let vc = LookZhuangjiaVC()
@@ -131,6 +138,13 @@ extension ZhuanjiaXinshuiChidVC:UITableViewDelegate,UITableViewDataSource,SixHea
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
  
+        if !User.sharedInstance().isLogin {
+            let vc = LoginViewController()
+            let nav = DataService.getSuperNav(controller: self)
+            nav.pushViewController(vc, animated: true)
+            return
+        }
+        
         let vc = LookZhuangjiaVC()
         vc.userid = dataArr[indexPath.row].ID
         vc.type = type

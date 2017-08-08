@@ -40,7 +40,7 @@ class CommentFrameModel: NSObject {
                 floorF = CGRect(x: x, y: y, width: scaleX(x: 20), height: scaleX(x: 20))
             }
             
-            timeF = CGRect(x: (floorF?.maxX)!, y: y, width: scaleX(x: 80), height: scaleX(x: 20))
+            timeF = CGRect(x: (floorF?.maxX)! + scaleX(x: 10), y: y, width: scaleX(x: 80), height: scaleX(x: 20))
             let contentSize = (listModel?.reply?.content ?? "").sizeWithFont(font: adoptedFont(fontSize: 15), maxW: scaleX(x: 295))
             contentF = CGRect(x: scaleX(x: 65), y: (timeF?.maxY)! + scaleY(y: 10), width: contentSize.width, height: contentSize.height)
             

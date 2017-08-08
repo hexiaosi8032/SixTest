@@ -101,6 +101,11 @@ extension PaiHangBangChildVC:UITableViewDelegate,UITableViewDataSource,SixHeadVi
     }
     
     func click(cell: ZhuangjiaCell, btn: UIButton) {
+        if !User.sharedInstance().isLogin {
+            let vc = LoginViewController()
+            navigationController?.pushViewController(vc, animated: true)
+            return
+        }
         //得到当前点击按钮所在位置
         let indexPath = myTabelView.indexPath(for: cell)
         let vc = LookZhuangjiaVC()

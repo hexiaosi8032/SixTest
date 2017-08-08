@@ -168,6 +168,12 @@ extension SearchZhuangjiaVC:UITableViewDelegate,UITableViewDataSource,UITextFiel
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
       
+        if !User.sharedInstance().isLogin {
+            let vc = LoginViewController()
+            navigationController?.pushViewController(vc, animated: true)
+            return
+        }
+        
         let vc = LookZhuangjiaVC()
         vc.userid = dataArr[indexPath.row].ID
         navigationController?.pushViewController(vc, animated: true)

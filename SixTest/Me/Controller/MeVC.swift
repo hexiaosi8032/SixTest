@@ -48,7 +48,8 @@ class MeVC: UIViewController {
     // MARK: Target方法
     func goLoginClick() -> () {
         let vc = LoginViewController()
-        navigationController?.pushViewController(vc, animated: true)
+        present(vc, animated: true, completion: nil)
+//        navigationController?.pushViewController(vc, animated: true)
     }
     
     func logoutClick() -> () {

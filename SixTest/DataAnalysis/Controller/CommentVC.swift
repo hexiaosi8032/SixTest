@@ -17,11 +17,7 @@ class CommentVC: UIViewController {
     
     @IBOutlet weak var InputButton: UIButton!
     var idStr:String = ""
-    var headView:UIView? {
-        didSet{
-            tabelView.tableHeaderView = headView
-        }
-    }
+    var headView:UIView?
     
     // MARK: 懒加载
     lazy var viewModel:CommentViewModel = {
@@ -54,6 +50,7 @@ class CommentVC: UIViewController {
         tabelView.delegate = viewModel
         tabelView.tableFooterView = UIView(frame: CGRect.zero)
         tabelView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0)
+        tabelView.tableHeaderView = headView
         
         InputView.backgroundColor = UIColorFromRGB(rgbValue: kBackGroundColor)
         InputView.delegate = viewModel
