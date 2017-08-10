@@ -11,7 +11,7 @@ import UIKit
 class MeVC: UIViewController {
 
     // MARK: 懒加载
-    
+    var type:String = "delete"
     // MARK: 初始化和生命周期
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,7 +49,6 @@ class MeVC: UIViewController {
     func goLoginClick() -> () {
         let vc = LoginViewController()
         present(vc, animated: true, completion: nil)
-//        navigationController?.pushViewController(vc, animated: true)
     }
     
     func logoutClick() -> () {

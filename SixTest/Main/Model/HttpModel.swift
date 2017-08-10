@@ -14,6 +14,8 @@ class HttpModel: NSObject {
     var statusCode:String?
     var error:Error?
     var message:String?
+    //响应头
+    var responseHeader = [String:Any]()
     
     override func setValue(_ value: Any?, forUndefinedKey key: String) {
         

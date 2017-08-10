@@ -94,9 +94,8 @@ class LookZhuangjiaHistoryListVC: UIViewController {
             self?.myTabelView.reloadData()
  
             
-        }) { (error:Error) in
-            print(error)
- 
+        }) { (httpModel:HttpModel) in
+            print(httpModel.message ?? "")
         }
         
     }

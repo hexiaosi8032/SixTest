@@ -56,8 +56,8 @@ class LoginVC: UIViewController {
             self?.loadLoginData()
             
             
-        }) { (error:Error) in
-            print(error)
+        }) { (httpModel:HttpModel) in
+            print(httpModel.message ?? "")
         }
     }
     
@@ -74,8 +74,8 @@ class LoginVC: UIViewController {
             
             print(httpModel.data!)
             
-        }) { (error:Error) in
-            print(error)
+        }) { (httpModel:HttpModel) in
+            print(httpModel.message ?? "")
         }
     }
     

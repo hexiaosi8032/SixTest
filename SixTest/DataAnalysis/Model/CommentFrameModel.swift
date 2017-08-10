@@ -33,6 +33,7 @@ class CommentFrameModel: NSObject {
             nameF = CGRect(x: x, y: scaleY(y: 20), width: scaleX(x: 250), height: scaleX(x: 15))
             commentF = CGRect(x: scaleX(x: 330), y: scaleY(y: 20), width: scaleX(x: 20), height: scaleX(x: 20))
             let y = (nameF?.maxY)! + scaleY(y: 10)
+            let lineHeight:CGFloat = scaleY(y: 10)
             if listModel?.replyer?.userRole == "EXPERT" {
                 professorF = CGRect(x: x, y: y, width: scaleX(x: 32), height: scaleX(x: 20))
                 floorF = CGRect(x: (professorF?.maxX)! + scaleX(x: 10), y: y, width: scaleX(x: 20), height: scaleX(x: 20))
@@ -41,16 +42,18 @@ class CommentFrameModel: NSObject {
             }
             
             timeF = CGRect(x: (floorF?.maxX)! + scaleX(x: 10), y: y, width: scaleX(x: 80), height: scaleX(x: 20))
-            let contentSize = (listModel?.reply?.content ?? "").sizeWithFont(font: adoptedFont(fontSize: 15), maxW: scaleX(x: 295))
+
+            let contentSize = (listModel?.reply?.content ?? "").sizeWithFont(font: adoptedFont(fontSize: 15), maxW: scaleX(x: 295), lineH: lineHeight)
+
             contentF = CGRect(x: scaleX(x: 65), y: (timeF?.maxY)! + scaleY(y: 10), width: contentSize.width, height: contentSize.height)
             
             cellH = (contentF?.maxY ?? 0) + scaleY(y: 20)
             
             if listModel?.childReplyList?.count ?? 0 > 0 {
                 let replyTo = listModel?.childReplyList?[0].replyTo?.nickName ?? listModel?.replyer?.nickName
-                let replyerSize1 = "\(listModel?.childReplyList?[0].replyer?.nickName ?? "") 回复 \(replyTo ?? "")".sizeWithFont(font: adoptedFont(fontSize: 12), maxW: scaleX(x: 280))
+                let replyerSize1 = "\(listModel?.childReplyList?[0].replyer?.nickName ?? "") 回复 \(replyTo ?? "")".sizeWithFont(font: adoptedFont(fontSize: 12), maxW: scaleX(x: 280), lineH: lineHeight)
                 replyer1F = CGRect(x: x + scaleX(x: 15), y: (contentF?.maxY)! + scaleY(y: 40), width: replyerSize1.width, height: replyerSize1.height)
-                let replySize1 = "\(listModel?.childReplyList?[0].reply?.content ?? "")".sizeWithFont(font: adoptedFont(fontSize: 12), maxW: scaleX(x: 280))
+                let replySize1 = "\(listModel?.childReplyList?[0].reply?.content ?? "")".sizeWithFont(font: adoptedFont(fontSize: 12), maxW: scaleX(x: 280),lineH: lineHeight)
                 reply1F = CGRect(x: x + scaleX(x: 15), y: (replyer1F?.maxY)! + scaleY(y: 10), width: replySize1.width, height: replySize1.height)
                
                 let shadowY = (contentF?.maxY)! + scaleY(y: 20)
@@ -60,9 +63,9 @@ class CommentFrameModel: NSObject {
            
             if listModel?.childReplyList?.count ?? 0 > 1 {
                 let replyTo = listModel?.childReplyList?[1].replyTo?.nickName ?? listModel?.replyer?.nickName
-                let replyerSize2 = "\(listModel?.childReplyList?[1].replyer?.nickName ?? "") 回复 \(replyTo ?? "")".sizeWithFont(font: adoptedFont(fontSize: 12), maxW: scaleX(x: 280))
+                let replyerSize2 = "\(listModel?.childReplyList?[1].replyer?.nickName ?? "") 回复 \(replyTo ?? "")".sizeWithFont(font: adoptedFont(fontSize: 12), maxW: scaleX(x: 280),lineH: lineHeight)
                 replyer2F = CGRect(x: x + scaleX(x: 15), y: (reply1F?.maxY)! + scaleY(y: 10), width: replyerSize2.width, height: replyerSize2.height)
-                let replySize2 = "\(listModel?.childReplyList?[1].reply?.content ?? "")".sizeWithFont(font: adoptedFont(fontSize: 12), maxW: scaleX(x: 280))
+                let replySize2 = "\(listModel?.childReplyList?[1].reply?.content ?? "")".sizeWithFont(font: adoptedFont(fontSize: 12), maxW: scaleX(x: 280),lineH: lineHeight)
                 reply2F = CGRect(x: x + scaleX(x: 15), y: (replyer2F?.maxY)! + scaleY(y: 10), width: replySize2.width, height: replySize2.height)
                 let shadowY = (contentF?.maxY)! + scaleY(y: 20)
                 shadowF = CGRect(x: x, y: shadowY, width: scaleX(x: 295), height: (reply2F?.maxY ?? 0) - shadowY + scaleY(y: 20))

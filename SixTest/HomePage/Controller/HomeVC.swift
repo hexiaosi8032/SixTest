@@ -20,13 +20,20 @@ class HomeVC: UIViewController,HomeResultViewdelegate,HomeListViewdelegate{
         return bgView
     }()
     
+    lazy var errorView:SixErrorView = {
+        [weak self] in
+        let errorView:SixErrorView = SixErrorView(frame: self?.view.bounds ?? CGRect.zero, block: {
+            self?.loadData()
+        })
+        return errorView
+    }()
     // MARK: 初始化和生命周期
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupUI()
         
-        getDatasAction()
+        loadData()
     }
     
     override func viewDidLayoutSubviews() {
@@ -111,7 +118,7 @@ class HomeVC: UIViewController,HomeResultViewdelegate,HomeListViewdelegate{
     }
     
     // MARK: HTTP请求
-    func getDatasAction() -> () {
+    func loadData() -> () {
         
         let url = kPublishResultPort;
         let parameters = [String:Any]()
@@ -129,10 +136,13 @@ class HomeVC: UIViewController,HomeResultViewdelegate,HomeListViewdelegate{
             User.sharedInstance().publishDateNo = (responseObject?["nextPublishInfo"] as? NSDictionary)?["publishDateNo"] as? String
             
             self?.bgView.refresh(resultMoldel!)
+            self?.errorView.removeFromSuperview()
             
-        }) { (error:Error) in
-             print(error)
-     
+        }) {
+            [weak self]
+            (httpModel:HttpModel) in
+            self?.view.addSubview((self?.errorView)!)
+            print(httpModel.message ?? "")
         }
     
     }

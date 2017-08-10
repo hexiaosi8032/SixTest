@@ -92,8 +92,8 @@ class CommentDetailVC: UIViewController {
             print(responseObject)
  
             
-        }) { (error:Error) in
-            print(error)
+        }) { (httpModel:HttpModel) in
+            print(httpModel.message ?? "")
         }
         
     }

@@ -38,7 +38,14 @@ class LookZhuangjiaNowView: UIView {
     
     var dataArr:[ZhuangjiaCurrentHistoryModel]? {
         didSet{
+            
             myTabelView.reloadData()
+            
+            if dataArr?.count == 0 {
+                addSubview(nullView)
+            }else{
+                nullView.removeFromSuperview()
+            }
             
             guard let type = type else {
                 return
@@ -67,6 +74,13 @@ class LookZhuangjiaNowView: UIView {
         return tabel
     }()
     
+    
+    lazy var nullView:SixNullView = {
+        [weak self] in
+        let nullView = SixNullView(frame: self!.bounds)
+        return nullView
+    }()
+    
     lazy var contentView:LookZhuangjiaCurrentConetView = {
         let contentView = LookZhuangjiaCurrentConetView()
         return contentView
@@ -74,9 +88,8 @@ class LookZhuangjiaNowView: UIView {
     
     // MARK: 初始化和生命周期
     init(isShowAllCurrentList:Bool) {
-        
         super.init(frame: CGRect.zero)
-        
+      
         if isShowAllCurrentList {
             addSubview(myTabelView)
         }else{

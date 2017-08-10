@@ -47,11 +47,13 @@ class DataAnalysisVC: UIViewController {
         
         collectionView.delegate = viewModel
         collectionView.dataSource = viewModel
-        collectionView.mj_footer = MJRefreshAutoFooter(refreshingBlock: {
-            [weak self] () in
+        collectionView.mj_footer = MJRefreshAutoNormalFooter(refreshingBlock: {
+            [weak self] in
             self?.viewModel.pageNum += 1
             self?.viewModel.loadTypeData()
+            
         })
+    
         viewModel.superVC = self
         viewModel.collectionView = collectionView
         view.addSubview(collectionView)

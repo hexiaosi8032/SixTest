@@ -33,6 +33,8 @@
 		882F1E091EF4C95F00543264 /* ZhuangjiaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882F1E071EF4C95F00543264 /* ZhuangjiaCell.swift */; };
 		882F1E201EF7AEEB00543264 /* LookZhuangjiaCurrentContenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882F1E1F1EF7AEEB00543264 /* LookZhuangjiaCurrentContenVC.swift */; };
 		882F1E291EF7C21A00543264 /* BallsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882F1E281EF7C21A00543264 /* BallsView.swift */; };
+		88468ABB1F3B050100BA5CD8 /* SixNullView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88468ABA1F3B050100BA5CD8 /* SixNullView.swift */; };
+		88468ABD1F3B052300BA5CD8 /* SixErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88468ABC1F3B052300BA5CD8 /* SixErrorView.swift */; };
 		8863BB7F1F31A6ED00B56A3B /* UILabel+YBAttributeTextTapAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 8863BB7E1F31A6ED00B56A3B /* UILabel+YBAttributeTextTapAction.m */; };
 		88741F531F01E55E00D87AC0 /* HintsBBSWriteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88741F521F01E55E00D87AC0 /* HintsBBSWriteVC.swift */; };
 		8875B2CB1EE0180500638A11 /* HomeResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8875B2CA1EE0180500638A11 /* HomeResultModel.swift */; };
@@ -175,6 +177,8 @@
 		882F1E071EF4C95F00543264 /* ZhuangjiaCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZhuangjiaCell.swift; sourceTree = "<group>"; };
 		882F1E1F1EF7AEEB00543264 /* LookZhuangjiaCurrentContenVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LookZhuangjiaCurrentContenVC.swift; sourceTree = "<group>"; };
 		882F1E281EF7C21A00543264 /* BallsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BallsView.swift; sourceTree = "<group>"; };
+		88468ABA1F3B050100BA5CD8 /* SixNullView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SixNullView.swift; sourceTree = "<group>"; };
+		88468ABC1F3B052300BA5CD8 /* SixErrorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SixErrorView.swift; sourceTree = "<group>"; };
 		8863BB7D1F31A6ED00B56A3B /* UILabel+YBAttributeTextTapAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+YBAttributeTextTapAction.h"; sourceTree = "<group>"; };
 		8863BB7E1F31A6ED00B56A3B /* UILabel+YBAttributeTextTapAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+YBAttributeTextTapAction.m"; sourceTree = "<group>"; };
 		88741F521F01E55E00D87AC0 /* HintsBBSWriteVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HintsBBSWriteVC.swift; sourceTree = "<group>"; };
@@ -829,6 +833,45 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		889A58371F3C5A96008B8BD4 /* 聊天室 */ = {
+			isa = PBXGroup;
+			children = (
+				889A58381F3C5A96008B8BD4 /* Controller */,
+				889A58391F3C5A96008B8BD4 /* Model */,
+				889A583A1F3C5A96008B8BD4 /* View */,
+				889A583B1F3C5A96008B8BD4 /* ViewModel */,
+			);
+			path = "聊天室";
+			sourceTree = "<group>";
+		};
+		889A58381F3C5A96008B8BD4 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		889A58391F3C5A96008B8BD4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		889A583A1F3C5A96008B8BD4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		889A583B1F3C5A96008B8BD4 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		88C86D8C1EDBBA8000D0162D = {
 			isa = PBXGroup;
 			children = (
@@ -1022,6 +1065,7 @@
 			isa = PBXGroup;
 			children = (
 				88C86DEA1EDBC3EB00D0162D /* HomeVC.swift */,
+				889A58371F3C5A96008B8BD4 /* 聊天室 */,
 				88F96B821EE00C1F0017D059 /* History */,
 				888DE1A01EF0CFBB00C219AA /* 专家心水 */,
 				888DE1A61EF0CFC800C219AA /* 人人料 */,
@@ -1166,6 +1210,8 @@
 				888DE1C91EF0E23B00C219AA /* SixHeadView.swift */,
 				882F1DBA1EF27DE800543264 /* SixNavLabel.swift */,
 				8823CE741F01F67C00A4A423 /* SixTextView.swift */,
+				88468ABA1F3B050100BA5CD8 /* SixNullView.swift */,
+				88468ABC1F3B052300BA5CD8 /* SixErrorView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1520,12 +1566,14 @@
 				888174501F2ECFA4003F1B2E /* DataTypeModel.swift in Sources */,
 				882B8E021F022E87006F7321 /* PaiHangBangListVC.swift in Sources */,
 				888DE19F1EF0CE6C00C219AA /* KSixType.swift in Sources */,
+				88468ABB1F3B050100BA5CD8 /* SixNullView.swift in Sources */,
 				882F1DC11EF2A31700543264 /* SearchZhuangjiaCell.swift in Sources */,
 				888DE1BF1EF0D01100C219AA /* ZhuanjiaXinshuiVC.swift in Sources */,
 				887811051F37F82C004B2525 /* NSData+AES.m in Sources */,
 				88CDCDA51F387B1F00CFA3D5 /* CommentDetailCell.swift in Sources */,
 				8878109F1F356CF1004B2525 /* TestViewController.m in Sources */,
 				88741F531F01E55E00D87AC0 /* HintsBBSWriteVC.swift in Sources */,
+				88468ABD1F3B052300BA5CD8 /* SixErrorView.swift in Sources */,
 				882BB32D1F06465A008DA70A /* JiangShangChidVC.swift in Sources */,
 				88F96B5A1EDFB68F0017D059 /* HomeResultView.swift in Sources */,
 				88F3848F1EF90A9A00F2D693 /* LookZhuangjiaHistoryListVC.swift in Sources */,

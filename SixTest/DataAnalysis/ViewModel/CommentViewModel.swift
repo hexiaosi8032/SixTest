@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MJRefresh
 
 class CommentViewModel: NSObject {
 
@@ -46,15 +47,26 @@ class CommentViewModel: NSObject {
             }
             
             let arr:[ReplyListModel] = ReplyListModel.mj_objectArray(withKeyValuesArray: responseObject["list"]) as! [ReplyListModel]
+            
             for replyListModel in arr{
                 let model = CommentFrameModel()
                 model.listModel = replyListModel
                 self?.dataArr.append(model)
             }
             self?.tabelView?.reloadData()
+            self?.tabelView?.mj_header.endRefreshing()
+            self?.tabelView?.mj_footer.endRefreshing()
+            self?.tabelView?.mj_footer.isHidden = (self?.dataArr.count == 0)
+            if arr.count == 0 {
+                self?.tabelView?.mj_footer.endRefreshingWithNoMoreData()
+            }
             
-        }) { (error:Error) in
-            print(error)
+        }) {
+            [weak self]
+            (httpModel:HttpModel) in
+            self?.tabelView?.mj_header.endRefreshing()
+            self?.tabelView?.mj_footer.endRefreshing()
+            print(httpModel.message ?? "")
         }
         
     }
@@ -87,16 +99,25 @@ class CommentViewModel: NSObject {
             [weak self]
             (httpModel:HttpModel) in
             
+            //登录后回调
+            if httpModel.statusCode == "USER_KEY_EXPIRE"{
+                self?.saveReplyData()
+                return
+            }
+            
             guard let responseObject = httpModel.data as? NSDictionary
                 else{
                     return
             }
             print(responseObject)
             
+            self?.pageNum = 1
             self?.loadMainReplyData()
+            self?.inputView?.text = nil
+            self?.inputView?.resignFirstResponder()
             
-        }) { (error:Error) in
-            print(error)
+        }) { (httpModel:HttpModel) in
+            print(httpModel.message ?? "")
         }
         
     }
@@ -108,7 +129,7 @@ extension CommentViewModel:UITableViewDelegate,UITableViewDataSource,CommentCell
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = CommentCell.cellWithTableView(tableView)
-        cell.floorLabel.text = "\(indexPath.row)楼"
+        cell.floorLabel.text = "\(indexPath.row + 1)楼"
         cell.model = dataArr[indexPath.row]
         cell.commentCelldelegate = self
         return cell
@@ -140,7 +161,12 @@ extension CommentViewModel:UITableViewDelegate,UITableViewDataSource,CommentCell
         inputButton?.isHidden = false
     }
     
-    func click(cell: CommentCell, view: AnyObject) {
+    func click(cell: CommentCell?, view: AnyObject?) {
+        guard let cell = cell,
+              let view = view
+        else {
+            return
+        }
         //得到当前点击按钮所在位置
         guard let indexPath = tabelView?.indexPath(for: cell),
               let model = dataArr[indexPath.row].listModel

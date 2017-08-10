@@ -108,9 +108,8 @@ class LookZhuangjiaVC: UIViewController {
             
     
             
-        }) { (error:Error) in
-            print(error)
-          
+        }) { (httpModel:HttpModel) in
+            print(httpModel.message ?? "")
         }
         
     }
@@ -122,7 +121,7 @@ class LookZhuangjiaVC: UIViewController {
         var parameters          = [String:Any]()
         parameters["operationType"] = "QUERY_USER_CAREFOR"
         parameters["userId"]  = User.sharedInstance().userID!//当前登录用户
-        parameters["toUserId"]  = userid
+        parameters["toUserId"]  = userid!
         print(parameters)
         HttpNetWorkTools.shareNetWorkTools().postAFNHttp(urlStr: url, parameters: parameters, success: {
             [weak self]
@@ -135,11 +134,9 @@ class LookZhuangjiaVC: UIViewController {
             
             self?.topView.isfollowed = httpModel.data as? String
             
-        }) { (error:Error) in
-            print(error)
-            
+        }) { (httpModel:HttpModel) in
+            print(httpModel.message ?? "")
         }
-        
     }
     
     //关注专家
@@ -157,9 +154,8 @@ class LookZhuangjiaVC: UIViewController {
      
             self?.topView.isfollowed = type == "add" ? "true" : "false"
  
-        }) { (error:Error) in
-            print(error)
- 
+        }) { (httpModel:HttpModel) in
+            print(httpModel.message ?? "")
         }
         
     }

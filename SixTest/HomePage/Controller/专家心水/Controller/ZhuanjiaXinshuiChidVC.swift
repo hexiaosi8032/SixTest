@@ -8,12 +8,14 @@
 
 import UIKit
 import MJExtension
+import MJRefresh
 
 class ZhuanjiaXinshuiChidVC: UIViewController {
 
     var type:KHintsType?
     var numberIndexList = 0
-    
+    var pageNum:Int = 1
+    var typeStr:String = "月胜场"
     fileprivate var dataArr = [ZhuangjiaListModel]()
     
     // MARK: 懒加载
@@ -30,10 +32,17 @@ class ZhuanjiaXinshuiChidVC: UIViewController {
         let tabel = UITableView(frame:CGRect.zero, style: .plain)
         tabel.rowHeight = scaleY(y: 85)
         tabel.tableFooterView = UIView(frame: CGRect.zero)
-        tabel.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 44, right: 0)
         tabel.delegate = self
         tabel.dataSource = self
         return tabel
+        }()
+    
+    lazy var errorView:SixErrorView = {
+        [weak self] in
+        let errorView:SixErrorView = SixErrorView(frame: self?.view.bounds ?? CGRect.zero, block: {
+            self?.loadData(orderByType: self?.typeStr ?? "")
+        })
+        return errorView
         }()
     
     // MARK: 初始化和生命周期
@@ -58,39 +67,64 @@ class ZhuanjiaXinshuiChidVC: UIViewController {
         view.addSubview(headView)
         view.addSubview(myTabelView)
         
-        getDatasAction(orderByType: "月胜场")
+        loadData(orderByType: typeStr)
+        
+        myTabelView.mj_header = MJRefreshNormalHeader(refreshingBlock: {
+            [weak self] in
+            self?.pageNum = 1
+            self?.loadData(orderByType: self?.typeStr ?? "")
+        })
+        
+        myTabelView.mj_footer = MJRefreshAutoNormalFooter(refreshingBlock: {
+            [weak self] in
+            self?.pageNum += 1
+            self?.loadData(orderByType: self?.typeStr ?? "")
+        })
+        
     }
     
     // MARK: Target方法
     
     // MARK: HTTP请求
-    func getDatasAction(orderByType:String) -> () {
+    func loadData(orderByType:String) -> () {
         
         let url = kProfessionalHintsListPort;
         var parameters = [String:Any]()
         parameters["recommendType"] = DataService.hintsTypeStringFormType(type: type!)//心水类别
         //排序方式 月胜场(toMonthWins)、查看数 (toCheckNum)、修改时间(toTime)
         parameters["orderByType"]   = DataService.hintsOrderTypeFromName(name: orderByType)
-        parameters["pageNum"]   = (1)//需要显示的页数
+        parameters["pageNum"]   = (pageNum)//需要显示的页数
         parameters["reverse"]   = (0)//排序方式（0-正序 1-倒序）
         
         HttpNetWorkTools.shareNetWorkTools().postAFNHttp(urlStr: url, parameters: parameters, success: {
             [weak self]
             (httpModel:HttpModel) in
             
-            self?.dataArr.removeAll()
-            
+            if self?.pageNum == 1 {
+                self?.dataArr.removeAll()
+            }
+
             let responseObject = httpModel.data?["list"] as? NSArray
             print(responseObject ?? "")
             
             let arr:[ZhuangjiaListModel] = ZhuangjiaListModel.mj_objectArray(withKeyValuesArray: responseObject) as! [ZhuangjiaListModel]
             self?.dataArr += arr
             self?.myTabelView.reloadData()
-            
-        }) { (error:Error) in
-            print(error)
+            self?.myTabelView.mj_header.endRefreshing()
+            self?.myTabelView.mj_footer.endRefreshing()
+            self?.myTabelView.mj_footer.isHidden = (self?.dataArr.count == 0)
+            if arr.count == 0 {
+                self?.myTabelView.mj_footer.endRefreshingWithNoMoreData()
+            }
+            self?.errorView.removeFromSuperview()
+        }) {
+            [weak self]
+            (httpModel:HttpModel) in
+            self?.view.addSubview((self?.errorView)!)
+            self?.myTabelView.mj_header.endRefreshing()
+            self?.myTabelView.mj_footer.endRefreshing()
+            print(httpModel.message ?? "")
         }
-        
     }
 
     // MARK: 代理和协议
@@ -100,7 +134,9 @@ class ZhuanjiaXinshuiChidVC: UIViewController {
 extension ZhuanjiaXinshuiChidVC:UITableViewDelegate,UITableViewDataSource,SixHeadViewDelegate,ZhuangjiaCelldelegate{
     
     func btnClick(_ index: Int, btn: UIButton) {
-        getDatasAction(orderByType: btn.currentTitle!)
+        pageNum = 1
+        typeStr = btn.currentTitle!
+        loadData(orderByType: btn.currentTitle!)
     }
     
     

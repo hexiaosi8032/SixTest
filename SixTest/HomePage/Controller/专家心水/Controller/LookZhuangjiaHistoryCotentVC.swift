@@ -42,7 +42,6 @@ class LookZhuangjiaHistoryCotentVC: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        contentView.frame = CGRect(x: 0, y: 64, width: ScreenWidth, height: ScreenHeight - 64)
     }
     
     // MARK: 自定义方法
@@ -51,6 +50,8 @@ class LookZhuangjiaHistoryCotentVC: UIViewController {
         view.backgroundColor = UIColor.white
         automaticallyAdjustsScrollViewInsets = false
         
+      
+        contentView.frame = CGRect(x: 0, y: 64, width: ScreenWidth, height: ScreenHeight - 64)
     }
     
     // MARK: Target方法
@@ -77,9 +78,8 @@ class LookZhuangjiaHistoryCotentVC: UIViewController {
             print(httpModel.data ?? "")
      
             
-        }) { (error:Error) in
-            print(error)
- 
+        }) { (httpModel:HttpModel) in
+            print(httpModel.message ?? "")
         }
         
     }

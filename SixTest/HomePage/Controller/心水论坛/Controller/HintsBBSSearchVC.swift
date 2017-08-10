@@ -95,9 +95,8 @@ class HintsBBSSearchVC: UIViewController {
             self?.dataArr += arr
             self?.myTabelView.reloadData()
             
-        }) { (error:Error) in
-            print(error)
-            
+        }) { (httpModel:HttpModel) in
+            print(httpModel.message ?? "")
         }
         
     }

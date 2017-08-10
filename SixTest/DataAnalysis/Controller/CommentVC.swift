@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import MBProgressHUD
+import MJRefresh
 
 class CommentVC: UIViewController {
 
@@ -18,7 +20,7 @@ class CommentVC: UIViewController {
     @IBOutlet weak var InputButton: UIButton!
     var idStr:String = ""
     var headView:UIView?
-    
+    var h5ContentStr:String?
     // MARK: 懒加载
     lazy var viewModel:CommentViewModel = {
         let viewModel = CommentViewModel()
@@ -52,6 +54,18 @@ class CommentVC: UIViewController {
         tabelView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0)
         tabelView.tableHeaderView = headView
         
+        tabelView.mj_header = MJRefreshNormalHeader(refreshingBlock: { 
+            [weak self] in
+            self?.viewModel.pageNum = 1
+            self?.viewModel.loadMainReplyData()
+        })
+        
+        tabelView.mj_footer = MJRefreshAutoNormalFooter(refreshingBlock: { 
+            [weak self] in
+            self?.viewModel.pageNum += 1
+            self?.viewModel.loadMainReplyData()
+            
+        })
         InputView.backgroundColor = UIColorFromRGB(rgbValue: kBackGroundColor)
         InputView.delegate = viewModel
         InputView.placeholder = "写几句吧"
@@ -68,6 +82,23 @@ class CommentVC: UIViewController {
                                                selector: #selector(keyboardChanged),
                                                name: NSNotification.Name.UIKeyboardWillChangeFrame,
                                                object: nil)
+        if let h5Str = self.h5ContentStr{
+            let hud = MBProgressHUD.showAdded(to:view, animated: true)
+            hud.label.text = "正在加载中..."
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
+                guard let attStr = try? NSMutableAttributedString(data:h5Str.data(using: .unicode)!, options: [NSDocumentTypeDocumentAttribute : NSHTMLTextDocumentType], documentAttributes: nil) else {
+                    return
+                }
+                let label = UILabel()
+                label.attributedText = attStr
+                label.numberOfLines = 0
+                label.sizeToFit()
+                self.tabelView.tableHeaderView = label
+                hud.hide(animated: true)
+            }
+            
+        }
+        
     }
     
     func keyboardChanged(no:NSNotification){
@@ -94,7 +125,6 @@ class CommentVC: UIViewController {
             return
         }
         viewModel.saveReplyData()
-        InputView.text = nil
         InputView.textDidChange()
     }
     

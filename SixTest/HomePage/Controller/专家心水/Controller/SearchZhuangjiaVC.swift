@@ -113,9 +113,8 @@ class SearchZhuangjiaVC: UIViewController {
             self?.myTabelView.reloadData()
     
             
-        }) { (error:Error) in
-            print(error)
-      
+        }) { (httpModel:HttpModel) in
+            print(httpModel.message ?? "")
         }
         
     }
@@ -140,9 +139,8 @@ class SearchZhuangjiaVC: UIViewController {
             AlertViewUtil.alertShow(message: "关注成功", controller: nil, confirmTitle: "提示")
  
             
-        }) { (error:Error) in
-            print(error)
- 
+        }) { (httpModel:HttpModel) in
+            print(httpModel.message ?? "")
         }
         
     }

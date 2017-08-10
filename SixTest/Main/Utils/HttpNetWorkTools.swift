@@ -16,6 +16,7 @@ class HttpNetWorkTools: NSObject {
     var manager:AFHTTPSessionManager = AFHTTPSessionManager()
     
     static let instance:HttpNetWorkTools = HttpNetWorkTools()
+    
     class func shareNetWorkTools() -> HttpNetWorkTools {
         return instance
     }
@@ -38,9 +39,14 @@ class HttpNetWorkTools: NSObject {
         }
     }
     
-    func postAFNHttp(urlStr:String,parameters:[String:Any],success:@escaping (HttpModel)->(),failure:@escaping (Error)->()) -> () {
+    func postAFNHttp(urlStr:String,parameters:[String:Any],success:@escaping (HttpModel)->(),failure:@escaping (HttpModel)->()) -> () {
 
         var parameters = parameters
+        
+        if (User.sharedInstance().sessionID != nil) {
+            manager.requestSerializer.setValue(User.sharedInstance().sessionID!, forHTTPHeaderField: "cookie")
+        }
+
         //加密
         if (parameters["operationType"] != nil) {
             parameters = encrypted(parameters: parameters)
@@ -49,7 +55,8 @@ class HttpNetWorkTools: NSObject {
         let url = kDefaultDomain + urlStr
         
         print("发送请求为---\(url) \n  参数为---\(parameters)")
-        SVProgressHUD.show()
+        let hud = MBProgressHUD.showAdded(to:UIApplication.shared.keyWindow!, animated: true)
+        hud.label.text = "正在加载中..."
 
         manager.post(url, parameters: parameters, progress: nil, success: {
             [weak self]
@@ -58,19 +65,20 @@ class HttpNetWorkTools: NSObject {
             guard let JSON:[String : Any] = responseObject as? [String : Any]
                 else {
                     AlertViewUtil.alertShow(message: "数据解析失败", controller: nil, confirmTitle: "确定")
-                    print("返回数据为空")
                     return
             }
        
             let data : NSData! = try? JSONSerialization.data(withJSONObject: JSON, options: []) as NSData!
             let JSONString = String(data: data as Data, encoding: .utf8)
-            print("返回数据为\n\(String(describing: JSONString ?? ""))")
+            let response:HTTPURLResponse = task.response as! HTTPURLResponse
+            print("返回数据为\n\(String(describing: JSONString ?? ""))\n响应头为\(response.allHeaderFields)")
             
             let model = HttpModel()
             model.setValuesForKeys(JSON)
+            model.responseHeader = response.allHeaderFields as! [String : Any]
             //解密
             if (parameters["operationType"] != nil) {
-                model.data = self?.decrypted(jsonString: JSON["data"] as! String) as AnyObject
+                model.data = self?.decrypted(jsonString: (JSON["data"] as? String) ?? "") as AnyObject
             }
             
             if model.statusCode == "SUCCESS"{
@@ -78,8 +86,9 @@ class HttpNetWorkTools: NSObject {
             }
             
             else if model.statusCode == "DATA_CHECK_FAIL"{
-                AlertViewUtil.alertShow(message: model.message ?? "数据请求失败", controller: nil, confirmTitle: "确定")
+                failure(model)
             }
+                
             //SESSION 过期 清理所有COOKIES 与用户对象的缓存 还有AES秘钥
             //需要重新登录
             else if model.statusCode == "USER_KEY_EXPIRE"{
@@ -93,12 +102,21 @@ class HttpNetWorkTools: NSObject {
                 }, cancleBlock:nil)
             }
             
-            SVProgressHUD.dismiss()
+            //数据访问失败
+            else if model.statusCode == "FAIL" {
+                failure(model)
+            }
+            
+            else{
+                AlertViewUtil.alertShow(message: model.message ?? "", controller: nil, confirmTitle: "确定")
+            }
+            hud.hide(animated: true)
             
         }) { (task:URLSessionDataTask?, error:Error) in
-            AlertViewUtil.alertShow(message: "请求数据失败", controller: nil, confirmTitle: "确定")
-            failure(error)
-            SVProgressHUD.dismiss()
+            let model = HttpModel()
+            model.error = error
+            failure(model)
+            hud.hide(animated: true)
         }
     }
     

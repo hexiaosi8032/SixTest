@@ -10,7 +10,11 @@ import UIKit
 
 class LookZhuangjiaCurrentConetView: UIView {
 
-    var nextPublishDateNo:String?
+    var nextPublishDateNo:String? {
+        didSet{
+            dateNoLabel.text = "    \(nextPublishDateNo ?? "")"
+        }
+    }
     
     // MARK: didSet
     var currentModel:ZhuangjiaCurrentHistoryModel? {

@@ -38,8 +38,8 @@ class DataAnalysisViewModel: NSObject{
       
             self?.topArr += arr
             self?.loadTypeData()
-        }) { (error:Error) in
-            print(error)
+        }) { (httpModel:HttpModel) in
+            print(httpModel.message ?? "")
         }
         
     }
@@ -61,9 +61,15 @@ class DataAnalysisViewModel: NSObject{
             let arr:[DataTypeModel] = DataTypeModel.mj_objectArray(withKeyValuesArray: responseObject["list"]) as! [DataTypeModel]
             self?.bottomArr += arr
             self?.collectionView?.reloadData()
-            
-        }) { (error:Error) in
-            print(error)
+            self?.collectionView?.mj_footer.endRefreshing()
+            if arr.count == 0 {
+                self?.collectionView?.mj_footer.endRefreshingWithNoMoreData()
+            }
+        }) {
+            [weak self]
+            (httpModel:HttpModel) in
+            self?.collectionView?.mj_footer.endRefreshing()
+            print(httpModel.message ?? "")
         }
         
     }
@@ -135,14 +141,17 @@ extension DataAnalysisViewModel:UICollectionViewDataSource,UICollectionViewDeleg
 //            vc.titleName = "详情\(model.typeName ?? "")"
 //            vc.content = model.content ?? ""
 //            superVC?.navigationController?.pushViewController(vc, animated: true)
-//            
+//
+            
             let vc = CommentVC()
             vc.idStr = model.ID ?? "";
             vc.title = "详情\(model.typeName ?? "")"
-            let head = UIView()
-            head.frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: 200)
-            head.backgroundColor = UIColor.red
-            vc.headView = head
+            vc.h5ContentStr = model.content ?? ""
+
+//            let head = UIView()
+//            head.frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: 200)
+//            head.backgroundColor = UIColor.red
+//            vc.headView = label
             superVC?.navigationController?.pushViewController(vc, animated: true)
         }
     }

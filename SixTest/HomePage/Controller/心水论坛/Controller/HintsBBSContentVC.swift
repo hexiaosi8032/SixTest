@@ -133,29 +133,26 @@ class HintsBBSContentVC: UIViewController {
             (httpModel:HttpModel) in
  
             print(httpModel.data ?? "")
-           
             
-            guard let weakSelf = self,
-                  let model = HintsBBSModel.mj_object(withKeyValues: httpModel.data as? NSDictionary)
-                else {
-                    AlertViewUtil.alertShow(message: "网络不好,请稍后再试", controller: nil, confirmTitle: "确定")
-                    return
+            if self == nil{
+                AlertViewUtil.alertShow(message: "网络不好,请稍后再试", controller: nil, confirmTitle: "确定")
+                return
             }
             
-            weakSelf.title = self?.getTitle(no: model.publishNoNow ?? "", nickName: model.nickName ?? "")
-            weakSelf.titleLabel.text = "【\(model.title ?? "")】"
-            weakSelf.contentTextView.text = model.content ?? ""
-            weakSelf.zanCount = Int(model.upvote ?? "0") ?? 0
-            weakSelf.zanLabel.text = "\(weakSelf.zanCount)赞"
-            let status = model.status
-            if weakSelf.userId == User.instance.userID {
+            let model = HintsBBSModel.mj_object(withKeyValues: httpModel.data as? NSDictionary)
+            self?.title = self?.getTitle(no: model?.publishNoNow ?? "", nickName: model?.nickName ?? "")
+            self?.titleLabel.text = "【\(model?.title ?? "")】"
+            self?.contentTextView.text = model?.content ?? ""
+            self?.zanCount = Int(model?.upvote ?? "0") ?? 0
+            self?.zanLabel.text = "\(String(describing: self?.zanCount))赞"
+            let status = model?.status
+            if self?.userId == User.instance.userID {
                 let titleString = status == "1" ? "审核中": status == "2" ? "审核通过" : "审核不通过"
-                weakSelf.navigationItem.rightBarButtonItem = UIBarButtonItem.itemWithTarget(target:weakSelf, action: #selector(self?.rightItemClick), title: titleString, titleColor: UIColorFromRGB(rgbValue: kWhiteColor))
+                self?.navigationItem.rightBarButtonItem = UIBarButtonItem.itemWithTarget(target:self, action: #selector(self?.rightItemClick), title: titleString, titleColor: UIColorFromRGB(rgbValue: kWhiteColor))
             }
             
-        }) { (error:Error) in
-            print(error)
-            
+        }) { (httpModel:HttpModel) in
+            print(httpModel.message ?? "")
         }
     }
     
@@ -170,25 +167,25 @@ class HintsBBSContentVC: UIViewController {
             [weak self]
             (httpModel:HttpModel) in
             
-            guard let weakSelf = self
-                else {
-                    return
+            if self == nil{
+                return
             }
             
-            weakSelf.zanBtn.isSelected = true
-            weakSelf.zanBtn.isUserInteractionEnabled = !weakSelf.zanBtn.isSelected
-            weakSelf.zanCount += 1
-            weakSelf.zanLabel.text = "\(weakSelf.zanCount)赞"
+            self!.zanBtn.isSelected = true
+            self!.zanBtn.isUserInteractionEnabled = !self!.zanBtn.isSelected
+            self!.zanCount += 1
+            self!.zanLabel.text = "\(self!.zanCount)赞"
             
             let defaul = UserDefaults()
-            defaul.set(weakSelf.userId, forKey: weakSelf.userId)
+            defaul.set(self!.userId, forKey: self!.userId)
             defaul.synchronize()
             
             print(httpModel.data ?? "")
             
-        }) { (error:Error) in
-            print(error)
+        }){ (httpModel:HttpModel) in
             AlertViewUtil.alertShow(message: "点赞失败", controller: nil, confirmTitle: "确定")
+            print(httpModel.message ?? "")
+          
         }
     }
     
@@ -209,10 +206,13 @@ class HintsBBSContentVC: UIViewController {
             AlertViewUtil.alertShow(message: "举报成功", controller: nil, confirmTitle: "确定")
             print(httpModel.data ?? "")
             
-        }) { (error:Error) in
-            print(error)
+        }){
+            (httpModel:HttpModel) in
             AlertViewUtil.alertShow(message: "举报失败", controller: nil, confirmTitle: "确定")
+            print(httpModel.message ?? "")
+            
         }
+
     }
     
     func getTitle(no:String,nickName:String) -> String {

@@ -61,9 +61,8 @@ class HintsBBSWriteVC: UIViewController {
             }
           
             
-        }) { (error:Error) in
-            print(error)
-            
+        }) { (httpModel:HttpModel) in
+            print(httpModel.message ?? "")
         }
     }
     
@@ -81,9 +80,8 @@ class HintsBBSWriteVC: UIViewController {
             [weak self]
             (httpModel:HttpModel) in
             
-        }) { (error:Error) in
-            print(error)
-            
+        }) { (httpModel:HttpModel) in
+            print(httpModel.message ?? "")
         }
         
     }

@@ -90,7 +90,8 @@ class LoginViewController: UIViewController {
         let titleLabel = UILabel(frame: CGRect(x: (ScreenWidth - 100) / 2, y: 20, width: 100, height: 44))
         titleLabel.text = title
         titleLabel.font = adoptedFont(fontSize: 18)
-        titleLabel.textColor = UIColorFromRGB(rgbValue: kBlackFontColor)
+        titleLabel.textColor = UIColor.white
+        titleLabel.textAlignment = .center
         headBgView.addSubview(titleLabel)
         
         let button = UIButton(type: .custom)
@@ -132,6 +133,13 @@ class LoginViewController: UIViewController {
             [weak self]
             (httpModel:HttpModel) in
             
+            if var cookies:String = httpModel.responseHeader["Set-Cookie"] as? String {
+                let temp = NSString(string: cookies)
+                let positon = temp.range(of: ";")
+                cookies = temp.substring(with: NSMakeRange(0, positon.location))
+                User.sharedInstance().sessionID = cookies
+            }
+        
             let AESKey = RSAHelper.shareInstance().decrypted(httpModel.data! as! String)
             User.sharedInstance().AESKey = AESKey
             
@@ -140,8 +148,8 @@ class LoginViewController: UIViewController {
             self?.loadLoginData()
             
             
-        }) { (error:Error) in
-            print(error)
+        }) { (httpModel:HttpModel) in
+            print(httpModel.message ?? "")
         }
     }
     
@@ -152,10 +160,11 @@ class LoginViewController: UIViewController {
         parameters["userName"] = userNameF.text
         parameters["password"]   = passWdF.text
         
+        
         HttpNetWorkTools.shareNetWorkTools().postAFNHttp(urlStr: url, parameters: parameters, success: {
             [weak self]
             (httpModel:HttpModel) in
-            
+        
             //登录后回调
             if httpModel.statusCode == "USER_KEY_EXPIRE"{
                 self?.loadLoginData()
@@ -166,8 +175,9 @@ class LoginViewController: UIViewController {
             User.sharedInstance().setValuesForKeys(httpModel.data as! [String : Any])
             User.sharedInstance().isLogin = true
             
-            var dic = httpModel.data as! [String:Any]
-            dic["isLogin"] = (true)
+            let dic = User.sharedInstance().mj_keyValues()
+//            var dic = httpModel.data as! [String:Any]
+//            dic["isLogin"] = (true)
             let defaul = UserDefaults()
             defaul.set(dic, forKey: "user")
             defaul.synchronize()
@@ -182,8 +192,8 @@ class LoginViewController: UIViewController {
             
             print(httpModel.data!)
             
-        }) { (error:Error) in
-            print(error)
+        }) { (httpModel:HttpModel) in
+            print(httpModel.message ?? "")
         }
     }
     

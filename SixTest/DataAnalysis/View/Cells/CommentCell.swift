@@ -10,7 +10,7 @@ import UIKit
 import SDWebImage
 
 @objc protocol CommentCelldelegate : NSObjectProtocol {
-    func click(cell:CommentCell,view:AnyObject)
+    func click(cell:CommentCell?,view:AnyObject?)
 }
 
 class CommentCell: UITableViewCell {
@@ -56,23 +56,18 @@ class CommentCell: UITableViewCell {
                 replyLabel1.isHidden = false
                 replyerLabel1.isHidden = false
                 replyLabel1.text = "\(model?.listModel?.childReplyList?[0].reply?.content ?? "")"
+                replyLabel1.attributedText = self.getAttribute(title: replyLabel1.text!, changeTitlte1: "", changeTitlte2: "")
                 let reply  = model?.listModel?.childReplyList?[0].replyer?.nickName ?? ""
                 let replyTo = (model?.listModel?.childReplyList?[0].replyTo?.nickName ?? model?.listModel?.replyer?.nickName) ?? ""
                 replyerLabel1.text = "\(reply) 回复 \(replyTo)"
-                let attStr = NSMutableAttributedString(string: replyerLabel1.text ?? "")
-                attStr.addAttribute(NSForegroundColorAttributeName, value: UIColorFromRGB(rgbValue: kBlueColor), range: NSMakeRange(0, reply.characters.count))
-                attStr.addAttribute(NSForegroundColorAttributeName, value: UIColorFromRGB(rgbValue: kBlueColor), range: NSMakeRange(reply.characters.count + 4, replyTo.characters.count))
-                replyerLabel1.attributedText = attStr
+
+                replyerLabel1.attributedText = self.getAttribute(title: replyerLabel1.text!, changeTitlte1: reply, changeTitlte2: replyTo)
                 replyerLabel1.yb_addAttributeTapAction(with: [reply,replyTo], tapClicked: {
                     [weak self]
                     (string:String?, range:NSRange, int:Int) in
-                    guard let weakself = self,
-                          let label = self?.replyerLabel1
-                        else {
-                        return
-                    }
+                    let label = self?.replyerLabel1
                     if int == 0 {
-                         weakself.commentCelldelegate?.click(cell: weakself, view: label)
+                         self?.commentCelldelegate?.click(cell: self, view: label)
                     }
                     
                     print("点击了\(string ?? "")标签 - {\(range.location) , \(range.length)} - \(int)")
@@ -85,25 +80,19 @@ class CommentCell: UITableViewCell {
             if model?.listModel?.childReplyList?.count ?? 0 > 1 {
                 replyLabel2.isHidden = false
                 replyerLabel2.isHidden = false
+                replyLabel2.text = "\(model?.listModel?.childReplyList?[1].reply?.content ?? "")"
+                replyLabel2.attributedText = self.getAttribute(title: replyLabel2.text!, changeTitlte1: "", changeTitlte2: "")
                 let reply  = model?.listModel?.childReplyList?[1].replyer?.nickName ?? ""
                 let replyTo = (model?.listModel?.childReplyList?[1].replyTo?.nickName ?? model?.listModel?.replyer?.nickName) ?? ""
                 replyerLabel2.text = "\(reply) 回复 \(replyTo)"
-                replyLabel2.text = "\(model?.listModel?.childReplyList?[1].reply?.content ?? "")"
-                let attStr = NSMutableAttributedString(string: replyerLabel2.text ?? "")
-                attStr.addAttribute(NSForegroundColorAttributeName, value: UIColorFromRGB(rgbValue: kBlueColor), range: NSMakeRange(0, reply.characters.count))
-                attStr.addAttribute(NSForegroundColorAttributeName, value: UIColorFromRGB(rgbValue: kBlueColor), range: NSMakeRange(reply.characters.count + 4, replyTo.characters.count))
-                replyerLabel2.attributedText = attStr
+                replyerLabel2.attributedText = self.getAttribute(title: replyerLabel2.text!, changeTitlte1: reply, changeTitlte2: replyTo)
                 replyerLabel2.yb_addAttributeTapAction(with: [reply,replyTo], tapClicked: {
                     [weak self]
                     (string:String?, range:NSRange, int:Int) in
                     
-                    guard let weakself = self,
-                        let label = self?.replyerLabel2
-                        else {
-                            return
-                    }
+                    let label = self?.replyerLabel2
                     if int == 0 {
-                        weakself.commentCelldelegate?.click(cell: weakself, view: label)
+                        self?.commentCelldelegate?.click(cell: self, view: label)
                     }
     
                     print("点击了\(string ?? "")标签 - {\(range.location) , \(range.length)} - \(int)")
@@ -225,6 +214,19 @@ class CommentCell: UITableViewCell {
         label.textColor = textColor
         label.numberOfLines = 0
         return label
+    }
+    
+    func getAttribute(title:String,changeTitlte1:String,changeTitlte2:String) -> (NSMutableAttributedString) {
+        let attStr = NSMutableAttributedString(string: title)
+        if changeTitlte1.characters.count >= 1 {
+            attStr.addAttribute(NSForegroundColorAttributeName, value: UIColorFromRGB(rgbValue: kBlueColor), range: NSMakeRange(0, changeTitlte1.characters.count))
+            attStr.addAttribute(NSForegroundColorAttributeName, value: UIColorFromRGB(rgbValue: kBlueColor), range: NSMakeRange(changeTitlte1.characters.count + 4, changeTitlte2.characters.count))
+        }
+     
+        let paraStyle = NSMutableParagraphStyle()
+        paraStyle.lineSpacing = scaleY(y: 10)
+        attStr.addAttribute(NSParagraphStyleAttributeName, value: paraStyle, range: NSMakeRange(0, title.characters.count))
+        return attStr
     }
     // MARK: Target方法
     func click(btn:UIButton) -> () {

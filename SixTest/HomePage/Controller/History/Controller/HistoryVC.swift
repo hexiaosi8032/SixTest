@@ -26,16 +26,26 @@ class HistoryVC: UIViewController {
         return tabel
         }()
     
+    lazy var errorView:SixErrorView = {
+        [weak self] in
+        let errorView:SixErrorView = SixErrorView(frame: self?.view.bounds ?? CGRect.zero, block: {
+            self?.loadData(timeString: self?.nowTimeString ?? "")
+        })
+        return errorView
+    }()
     // MARK: 初始化和生命周期
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupUI()
         
-        getDatasAction(timeString: nowTimeString)
+        loadData(timeString: nowTimeString)
         
     }
     
+    deinit {
+        print("销毁")
+    }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -68,19 +78,21 @@ class HistoryVC: UIViewController {
         let pickView = SelectPickView(race:race,type: .pickViewTypeNormal, dataArr:titles, midShowString: "请选择年份")
         pickView.rightBlock = {
             (object : Any) in
-            self.getDatasAction(timeString: object as! String)
-            btn.setTitle(object as? String, for: .normal)
+            self.nowTimeString = object as! String
+            self.loadData(timeString: self.nowTimeString)
+            btn.setTitle(self.nowTimeString, for: .normal)
         }
         
         view.addSubview(pickView)
     }
     
     // MARK: HTTP请求
-    func getDatasAction(timeString:String) -> () {
+    func loadData(timeString:String) -> () {
         
         let url = kQueryHistoryRecordPort;
         var parameters = [String:Any]()
         parameters["publishDateNo"] = timeString
+        print(errorView)
         
         HttpNetWorkTools.shareNetWorkTools().postAFNHttp(urlStr: url, parameters: parameters, success: {
             [weak self]
@@ -93,12 +105,17 @@ class HistoryVC: UIViewController {
                     self?.myTabelView.reloadData()
                     return
             }
+            
             let arr:[HistoryModel] = HistoryModel.mj_objectArray(withKeyValuesArray: responseObject) as! [HistoryModel]
             self?.dataArr += arr
             self?.myTabelView.reloadData()
+            self?.errorView.removeFromSuperview()
+        }) {
+            [weak self]
+            (httpModel:HttpModel) in
             
-        }) { (error:Error) in
-            print(error)
+            self?.view.addSubview((self?.errorView)!)
+            print(httpModel.message ?? "")
         }
         
     }
