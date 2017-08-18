@@ -84,7 +84,8 @@ class HomeVC: UIViewController,HomeResultViewdelegate,HomeListViewdelegate{
     
     //聊天室
     func chatRoomItemClick() -> () {
-        
+        let vc = ChatListVC()
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     func iconClick(index: NSInteger) {

@@ -12,4 +12,5 @@
 #import "MainTitleStyleVC.h"
 #import "UILabel+YBAttributeTextTapAction.h"
 #import "Secret.h"
+#import "ChatViewController.h"
 #endif /* OCHeader_h */

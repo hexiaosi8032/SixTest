@@ -100,11 +100,16 @@ class ZhuanjiaXinshuiChidVC: UIViewController {
             [weak self]
             (httpModel:HttpModel) in
             
+            guard let dic = httpModel.data as? NSDictionary
+                else{
+                    return
+            }
+            
             if self?.pageNum == 1 {
                 self?.dataArr.removeAll()
             }
 
-            let responseObject = httpModel.data?["list"] as? NSArray
+            let responseObject = dic["list"] as? NSArray
             print(responseObject ?? "")
             
             let arr:[ZhuangjiaListModel] = ZhuangjiaListModel.mj_objectArray(withKeyValuesArray: responseObject) as! [ZhuangjiaListModel]

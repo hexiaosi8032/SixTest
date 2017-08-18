@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Hyphenate
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,6 +21,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.backgroundColor = UIColor.white
         window?.rootViewController = MainTabBarVC()
         window?.makeKeyAndVisible()
+        
+        let options = EMOptions(appkey: "1184170415178432#liuhecai")
+        EMClient.shared().initializeSDK(with: options)
         
         if let dic = UserDefaults().object(forKey: "user") {
             User.sharedInstance().setValuesForKeys(dic as! [String : Any])

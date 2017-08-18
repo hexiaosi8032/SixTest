@@ -75,9 +75,14 @@ class PaiHangBangChildVC: UIViewController {
             [weak self]
             (httpModel:HttpModel) in
             
+            guard let dic = httpModel.data as? NSDictionary
+                else{
+                    return
+            }
+            
             self?.dataArr.removeAll()
             
-            let responseObject = httpModel.data?["list"] as? NSArray
+            let responseObject = dic["list"] as? NSArray
             print(responseObject ?? "")
             
             let arr:[PaiHangBangModel] = PaiHangBangModel.mj_objectArray(withKeyValuesArray: responseObject) as! [PaiHangBangModel]

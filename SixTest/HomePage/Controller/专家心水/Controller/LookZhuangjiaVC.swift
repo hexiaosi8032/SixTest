@@ -95,13 +95,17 @@ class LookZhuangjiaVC: UIViewController {
             [weak self]
             (httpModel:HttpModel) in
             
+            guard let dic = httpModel.data as? NSDictionary
+                else{
+                    return
+            }
             
-            let infoModel = ZhuangjiaInfoModel.mj_object(withKeyValues: httpModel.data?["userInfo"] as Any)
+            let infoModel = ZhuangjiaInfoModel.mj_object(withKeyValues: dic["userInfo"] as Any)
             self?.topView.model = infoModel
             
-            self?.nowView.nextPublishDateNo = httpModel.data?["nextPublishDateNo"] as? String
+            self?.nowView.nextPublishDateNo = dic["nextPublishDateNo"] as? String
             
-            let responseObject = httpModel.data?["list"] as? NSArray
+            let responseObject = dic["list"] as? NSArray
             
             let arr:[ZhuangjiaCurrentHistoryModel] = ZhuangjiaCurrentHistoryModel.mj_objectArray(withKeyValuesArray: responseObject) as! [ZhuangjiaCurrentHistoryModel]
             self?.nowView.dataArr = arr

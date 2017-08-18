@@ -51,6 +51,7 @@ import UIKit
     let kReportBBSTopicPort         = "/mobile/tipoff/add_tipoff"
     //赞帖子
     let kLikeBBSTopicPort           = "/mobile/topic_add_upvotes"
+    let kChatroomListFetchPort      = "/mobile/chatroom/list"
 
     //回复-主回复查询
     let kReplyMainQuery           = "/mobile/reply/findReplyList"
@@ -64,6 +65,8 @@ import UIKit
     let kDataHotListPort            = "/mobile/free_info/get_freeinfo_hits_list"
     //资料类别列表
     let kDataTypeListPort           = "/mobile/free_info/get_freeinfo_type_list"
+    //资料列表
+    let kDataListPort               = "/mobile/free_info/get_freeinfo_list"
 
     // MARK: 个人中心 加密通讯分派接口
     let kAPIGatewayPort = "/mobile/api_gateway/request"

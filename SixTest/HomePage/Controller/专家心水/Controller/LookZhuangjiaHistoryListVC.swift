@@ -87,7 +87,11 @@ class LookZhuangjiaHistoryListVC: UIViewController {
             (httpModel:HttpModel) in
             
             print(httpModel.data ?? "")
-            let responseObject = httpModel.data?["list"] as? NSArray
+            guard let dic = httpModel.data as? NSDictionary
+                else{
+                    return
+            }
+            let responseObject = dic["list"] as? NSArray
             
             let arr:[ZhuangjiaCurrentHistoryModel] = ZhuangjiaCurrentHistoryModel.mj_objectArray(withKeyValuesArray: responseObject) as! [ZhuangjiaCurrentHistoryModel]
             self?.dataArr += arr

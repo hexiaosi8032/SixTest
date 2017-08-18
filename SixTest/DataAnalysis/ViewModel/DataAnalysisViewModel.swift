@@ -153,6 +153,13 @@ extension DataAnalysisViewModel:UICollectionViewDataSource,UICollectionViewDeleg
 //            head.backgroundColor = UIColor.red
 //            vc.headView = label
             superVC?.navigationController?.pushViewController(vc, animated: true)
+        }else{
+            let model = self.bottomArr[indexPath.item]
+            let vc = DataAnalysisListVC()
+            vc.title = model.name
+            vc.typeId = model.ID
+            superVC?.navigationController?.pushViewController(vc, animated: true)
+            
         }
     }
 }

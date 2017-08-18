@@ -10,4 +10,5 @@ target 'SixTest' do
   pod 'YYModel'
   pod 'MJExtension'
   pod 'SDWebImage'
+  pod 'Hyphenate'
 end

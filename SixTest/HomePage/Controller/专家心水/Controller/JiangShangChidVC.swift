@@ -130,7 +130,12 @@ class JiangShangChidVC: UIViewController {
             
             self?.dataArr.removeAll()
             
-            let responseObject = httpModel.data?["list"] as? NSArray
+            guard let dic = httpModel.data as? NSDictionary
+                else{
+                    return
+            }
+            
+            let responseObject = dic["list"] as? NSArray
             if responseObject?.count == 0{
                  AlertViewUtil.alertShow(message: "暂时没有数据", controller: nil, confirmTitle: "确定")
             }
