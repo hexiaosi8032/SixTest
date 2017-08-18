@@ -17,6 +17,7 @@ class User: NSObject {
     var AESKey:String?
     var userRole:String?
     var sessionID:String?
+    var nickName:String?
     
     static let instance:User = User()
     func clean() -> () {

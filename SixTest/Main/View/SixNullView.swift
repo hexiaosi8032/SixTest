@@ -12,7 +12,7 @@ class SixNullView: UIView {
  
     // MARK: 懒加载
     lazy var iconView:UIImageView = UIImageView(image: UIImage(named: "暂无数据"))
-    lazy var messgaeLabel:UILabel = UILabel.addLabel(fontSize: 12, textColor: UIColorFromRGB(rgbValue: kBlackFontColor))
+    lazy var messgaeLabel:UILabel = UILabel.addLabel(fontSize: 15, textColor: UIColorFromRGB(rgbValue: kBlackFontColor))
     // MARK: 初始化和生命周期
     override init(frame: CGRect) {
         super.init(frame: frame)
