@@ -102,12 +102,9 @@ class DataAnalysisListVC: UIViewController {
             self?.myTabelView.mj_header.endRefreshing()
             self?.myTabelView.mj_footer.endRefreshing()
             
-            guard let dic = httpModel.data as? NSDictionary
-                else{
-                    return
-            }
+            let responseObject = httpModel.data as? NSDictionary ?? [:]
             
-            let arr:[DataAnalysisListModel] = DataAnalysisListModel.mj_objectArray(withKeyValuesArray: dic["list"]) as! [DataAnalysisListModel]
+            let arr:[DataAnalysisListModel] = DataAnalysisListModel.mj_objectArray(withKeyValuesArray: responseObject["list"]) as! [DataAnalysisListModel]
             self?.dataArr += arr
             self?.myTabelView.reloadData()
             self?.errorView.removeFromSuperview()
@@ -118,7 +115,7 @@ class DataAnalysisListVC: UIViewController {
             }
             
             if self?.dataArr.count == 0{
-                self?.view.addSubview((self?.nullView)!)
+                self?.view.addSubview(self?.nullView ?? UIView())
             }
             
         }) {
@@ -126,7 +123,7 @@ class DataAnalysisListVC: UIViewController {
             (httpModel:HttpModel) in
             self?.myTabelView.mj_header.endRefreshing()
             self?.myTabelView.mj_footer.endRefreshing()
-            self?.view.addSubview((self?.errorView)!)
+            self?.view.addSubview(self?.errorView ?? UIView())
             print(httpModel.message ?? "")
         }
         

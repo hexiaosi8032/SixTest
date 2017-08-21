@@ -42,11 +42,12 @@ class LookZhuangjiaVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupUI()
-        
         getRecommendDatasAction()
         
         getCheckIsAlreadyFollowedDatasAction()
+        
+        setupUI()
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -95,19 +96,14 @@ class LookZhuangjiaVC: UIViewController {
             [weak self]
             (httpModel:HttpModel) in
             
-            guard let dic = httpModel.data as? NSDictionary
-                else{
-                    return
-            }
+            let responseObject = httpModel.data as? NSDictionary ?? [:]
             
-            let infoModel = ZhuangjiaInfoModel.mj_object(withKeyValues: dic["userInfo"] as Any)
+            let infoModel = ZhuangjiaInfoModel.mj_object(withKeyValues: responseObject["userInfo"] as Any)
             self?.topView.model = infoModel
             
-            self?.nowView.nextPublishDateNo = dic["nextPublishDateNo"] as? String
+            self?.nowView.nextPublishDateNo = responseObject["nextPublishDateNo"] as? String
             
-            let responseObject = dic["list"] as? NSArray
-            
-            let arr:[ZhuangjiaCurrentHistoryModel] = ZhuangjiaCurrentHistoryModel.mj_objectArray(withKeyValuesArray: responseObject) as! [ZhuangjiaCurrentHistoryModel]
+            let arr:[ZhuangjiaCurrentHistoryModel] = ZhuangjiaCurrentHistoryModel.mj_objectArray(withKeyValuesArray: responseObject["list"] as? NSArray) as! [ZhuangjiaCurrentHistoryModel]
             self?.nowView.dataArr = arr
             
     

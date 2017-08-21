@@ -55,10 +55,9 @@ class HintsBBSWriteVC: UIViewController {
             (httpModel:HttpModel) in
             
             print(httpModel.data ?? "")
-            if (httpModel.data != nil) {
-                let model = HintsBBSModel.mj_object(withKeyValues: httpModel.data as? NSDictionary)
-                self?.writeView.model = model
-            }
+            let responseObject = httpModel.data as? NSDictionary ?? [:]
+            let model = HintsBBSModel.mj_object(withKeyValues: responseObject)
+            self?.writeView.model = model
           
             
         }) { (httpModel:HttpModel) in

@@ -33,6 +33,7 @@ class HistoryVC: UIViewController {
         })
         return errorView
     }()
+    
     // MARK: 初始化和生命周期
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -98,14 +99,9 @@ class HistoryVC: UIViewController {
             [weak self]
             (httpModel:HttpModel) in
             
+            let responseObject = httpModel.data as? NSArray ?? []
+            
             self?.dataArr.removeAll()
-            
-            guard let responseObject = httpModel.data as? NSArray
-                else{
-                    self?.myTabelView.reloadData()
-                    return
-            }
-            
             let arr:[HistoryModel] = HistoryModel.mj_objectArray(withKeyValuesArray: responseObject) as! [HistoryModel]
             self?.dataArr += arr
             self?.myTabelView.reloadData()
@@ -114,7 +110,7 @@ class HistoryVC: UIViewController {
             [weak self]
             (httpModel:HttpModel) in
             
-            self?.view.addSubview((self?.errorView)!)
+            self?.view.addSubview(self?.errorView ?? UIView())
             print(httpModel.message ?? "")
         }
         
@@ -126,7 +122,6 @@ class HistoryVC: UIViewController {
 
 
 extension HistoryVC:UITableViewDelegate,UITableViewDataSource{
-    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = HistoryCell.cellWithTableView(tableView)

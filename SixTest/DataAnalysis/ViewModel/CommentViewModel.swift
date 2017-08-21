@@ -37,11 +37,8 @@ class CommentViewModel: NSObject {
             [weak self]
             (httpModel:HttpModel) in
             
-            guard let responseObject = httpModel.data as? NSDictionary
-                else{
-                    return
-            }
-            print(responseObject)
+            let responseObject = httpModel.data as? NSDictionary ?? [:]
+            
             if self?.pageNum == 1 {
                 self?.dataArr.removeAll()
             }
@@ -105,12 +102,8 @@ class CommentViewModel: NSObject {
                 return
             }
             
-            guard let responseObject = httpModel.data as? NSDictionary
-                else{
-                    return
-            }
+            let responseObject = httpModel.data as? NSDictionary ?? [:]
             print(responseObject)
-            
             self?.pageNum = 1
             self?.loadMainReplyData()
             self?.inputView?.text = nil

@@ -102,18 +102,10 @@ class SearchZhuangjiaVC: UIViewController {
             [weak self]
             (httpModel:HttpModel) in
             
-            guard let dic = httpModel.data as? NSDictionary
-                else{
-                    return
-            }
+            let responseObject = httpModel.data as? NSDictionary ?? [:]
             
             self?.dataArr.removeAll()
-            
-            let responseObject = dic["list"] as? NSArray
-            print(responseObject ?? "")
-            
-            let arr:[SearchZhuangjiaModel] = SearchZhuangjiaModel.mj_objectArray(withKeyValuesArray: responseObject) as! [SearchZhuangjiaModel]
- 
+            let arr:[SearchZhuangjiaModel] = SearchZhuangjiaModel.mj_objectArray(withKeyValuesArray: responseObject["list"] as? NSArray) as! [SearchZhuangjiaModel]
             self?.dataArr += arr
             self?.myTabelView.reloadData()
     

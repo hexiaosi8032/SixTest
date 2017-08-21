@@ -34,9 +34,10 @@ class DataAnalysisVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        viewModel.loadHotData()
+        
         setupUI()
         
-        viewModel.loadHotData()
     }
     
     // MARK: 自定义方法

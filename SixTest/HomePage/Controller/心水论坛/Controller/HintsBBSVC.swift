@@ -87,15 +87,11 @@ class HintsBBSVC: UIViewController {
             [weak self]
             (httpModel:HttpModel) in
             
-            guard let dic = httpModel.data as? NSDictionary
-                else{
-                    return
-            }
+            let responseObject = httpModel.data as? NSDictionary ?? [:]
             
             self?.dataArr.removeAll()
-            
-            let responseObject = dic["topicList"] as? NSArray
-            let arr:[HintsBBSModel] = HintsBBSModel.mj_objectArray(withKeyValuesArray: responseObject) as! [HintsBBSModel]
+      
+            let arr:[HintsBBSModel] = HintsBBSModel.mj_objectArray(withKeyValuesArray: responseObject["topicList"] as? NSArray) as! [HintsBBSModel]
             self?.dataArr += arr
             self?.myTabelView.reloadData()
             

@@ -81,6 +81,8 @@ class ZhuanjiaXinshuiChidVC: UIViewController {
             self?.loadData(orderByType: self?.typeStr ?? "")
         })
         
+        myTabelView.mj_footer.isHidden = true
+        
     }
     
     // MARK: Target方法
@@ -100,19 +102,13 @@ class ZhuanjiaXinshuiChidVC: UIViewController {
             [weak self]
             (httpModel:HttpModel) in
             
-            guard let dic = httpModel.data as? NSDictionary
-                else{
-                    return
-            }
+            let responseObject = httpModel.data as? NSDictionary ?? [:]
             
             if self?.pageNum == 1 {
                 self?.dataArr.removeAll()
             }
-
-            let responseObject = dic["list"] as? NSArray
-            print(responseObject ?? "")
-            
-            let arr:[ZhuangjiaListModel] = ZhuangjiaListModel.mj_objectArray(withKeyValuesArray: responseObject) as! [ZhuangjiaListModel]
+ 
+            let arr:[ZhuangjiaListModel] = ZhuangjiaListModel.mj_objectArray(withKeyValuesArray: responseObject["list"] as? NSArray) as! [ZhuangjiaListModel]
             self?.dataArr += arr
             self?.myTabelView.reloadData()
             self?.myTabelView.mj_header.endRefreshing()
@@ -125,7 +121,7 @@ class ZhuanjiaXinshuiChidVC: UIViewController {
         }) {
             [weak self]
             (httpModel:HttpModel) in
-            self?.view.addSubview((self?.errorView)!)
+            self?.view.addSubview(self?.errorView ?? UIView())
             self?.myTabelView.mj_header.endRefreshing()
             self?.myTabelView.mj_footer.endRefreshing()
             print(httpModel.message ?? "")

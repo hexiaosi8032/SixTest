@@ -69,11 +69,8 @@ class CommentDetailVC: UIViewController {
             [weak self]
             (httpModel:HttpModel) in
             
-            guard let responseObject = httpModel.data as? NSArray
-                else{
-                    return
-            }
-      
+            let responseObject = httpModel.data as? NSArray ?? []
+            
             let arr:[CommentDeailModel] = CommentDeailModel.mj_objectArray(withKeyValuesArray: responseObject) as! [CommentDeailModel]
             let firstModel = CommentDeailModel()
             firstModel.imgStr = self?.imgStr

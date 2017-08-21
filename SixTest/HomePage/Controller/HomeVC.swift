@@ -136,7 +136,7 @@ class HomeVC: UIViewController,HomeResultViewdelegate,HomeListViewdelegate{
             resultMoldel?.nextPublishInfo = nextPublishInfo
             User.sharedInstance().publishDateNo = (responseObject?["nextPublishInfo"] as? NSDictionary)?["publishDateNo"] as? String
             
-            self?.bgView.refresh(resultMoldel!)
+            self?.bgView.refresh(resultMoldel ?? HomeResultModel())
             self?.errorView.removeFromSuperview()
             
         }) {

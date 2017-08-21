@@ -26,6 +26,9 @@ class User: NSObject {
         userID = nil
         publishDateNo = nil
         AESKey = nil
+        userRole = nil
+        sessionID = nil
+        nickName = nil
     }
     
     class func sharedInstance() -> User {

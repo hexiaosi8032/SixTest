@@ -130,16 +130,12 @@ class JiangShangChidVC: UIViewController {
             
             self?.dataArr.removeAll()
             
-            guard let dic = httpModel.data as? NSDictionary
-                else{
-                    return
-            }
+            let responseObject = httpModel.data as? NSDictionary ?? [:]
             
-            let responseObject = dic["list"] as? NSArray
-            if responseObject?.count == 0{
+            if (responseObject["list"] as! NSArray).count == 0{
                  AlertViewUtil.alertShow(message: "暂时没有数据", controller: nil, confirmTitle: "确定")
             }
-            print(responseObject ?? "")
+            print(responseObject)
             
             let arr:[PaiHangBangModel] = PaiHangBangModel.mj_objectArray(withKeyValuesArray: responseObject) as! [PaiHangBangModel]
             self?.dataArr += arr

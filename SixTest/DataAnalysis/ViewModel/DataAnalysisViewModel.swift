@@ -30,10 +30,8 @@ class DataAnalysisViewModel: NSObject{
             [weak self]
             (httpModel:HttpModel) in
             
-            guard let responseObject = httpModel.data as? NSDictionary
-                else{
-                    return
-            }
+            let responseObject = httpModel.data as? NSDictionary ?? [:]
+            
             let arr:[HotDataModel] = HotDataModel.mj_objectArray(withKeyValuesArray: responseObject["list"]) as! [HotDataModel]
       
             self?.topArr += arr
@@ -54,10 +52,8 @@ class DataAnalysisViewModel: NSObject{
             [weak self]
             (httpModel:HttpModel) in
 
-            guard let responseObject = httpModel.data as? NSDictionary
-                else{
-                    return
-            }
+            let responseObject = httpModel.data as? NSDictionary ?? [:]
+            
             let arr:[DataTypeModel] = DataTypeModel.mj_objectArray(withKeyValuesArray: responseObject["list"]) as! [DataTypeModel]
             self?.bottomArr += arr
             self?.collectionView?.reloadData()

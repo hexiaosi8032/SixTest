@@ -31,12 +31,10 @@ class MainNavigationVC: UINavigationController {
         navigationBar.titleTextAttributes = textAttrs
     }
     
-    /// 重写 push 方法，所有的 push 动作都会调用此方法！
-    /// viewController 是被 push 的控制器，设置他的左侧的按钮作为返回按钮
+    // 重写 push
     override func pushViewController(_ viewController: UIViewController, animated: Bool) {
         
-        if viewControllers.count > 0
-        {
+        if viewControllers.count > 0{
             // 隐藏底部的 TabBar
             viewController.hidesBottomBarWhenPushed = true
             

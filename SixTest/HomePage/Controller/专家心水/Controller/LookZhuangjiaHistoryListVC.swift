@@ -86,14 +86,9 @@ class LookZhuangjiaHistoryListVC: UIViewController {
             [weak self]
             (httpModel:HttpModel) in
             
-            print(httpModel.data ?? "")
-            guard let dic = httpModel.data as? NSDictionary
-                else{
-                    return
-            }
-            let responseObject = dic["list"] as? NSArray
+            let responseObject = httpModel.data as? NSDictionary ?? [:]
             
-            let arr:[ZhuangjiaCurrentHistoryModel] = ZhuangjiaCurrentHistoryModel.mj_objectArray(withKeyValuesArray: responseObject) as! [ZhuangjiaCurrentHistoryModel]
+            let arr:[ZhuangjiaCurrentHistoryModel] = ZhuangjiaCurrentHistoryModel.mj_objectArray(withKeyValuesArray: responseObject["list"] as? NSArray) as! [ZhuangjiaCurrentHistoryModel]
             self?.dataArr += arr
             self?.myTabelView.reloadData()
  

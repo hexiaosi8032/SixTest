@@ -11,7 +11,7 @@ import UIKit
     //默认服务器
     var kDefaultDomain:String       = "http://192.168.0.140:6060";
 
-    // MARK: 历史开奖模块接口
+    // MARK: 首页
     //专家心水列表
     let kProfessionalHintsListPort = "/mobile/recommend/get_recommend_records_date"
     //专家搜索接口r

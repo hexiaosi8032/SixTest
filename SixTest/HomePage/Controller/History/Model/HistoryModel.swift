@@ -19,8 +19,8 @@ class HistoryModel: NSObject {
     var publishTime:String?
     var published:String?
     var updateDate:String?
+    
     override static func mj_objectClassInArray() -> [AnyHashable : Any]! {
-        
         return ["lotteryRecordDetails":HomeBallModel.self]
         
     }

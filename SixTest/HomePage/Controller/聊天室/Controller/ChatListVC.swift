@@ -78,10 +78,7 @@ class ChatListVC: UIViewController {
             [weak self]
             (httpModel:HttpModel) in
             
-            guard let responseObject = httpModel.data as? NSArray
-                else{
-                    return
-            }
+            let responseObject = httpModel.data as? NSArray ?? []
             
             let arr:[ChatListModel] = ChatListModel.mj_objectArray(withKeyValuesArray: responseObject) as! [ChatListModel]
             self?.dataArr += arr
@@ -91,7 +88,7 @@ class ChatListVC: UIViewController {
             [weak self]
             (httpModel:HttpModel) in
             
-            self?.view.addSubview((self?.errorView)!)
+            self?.view.addSubview(self?.errorView ?? UIView())
             print(httpModel.message ?? "")
         }
         

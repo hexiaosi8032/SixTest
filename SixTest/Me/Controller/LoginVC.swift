@@ -51,7 +51,7 @@ class LoginVC: UIViewController {
             let AESKey = RSAHelper.shareInstance().decrypted(httpModel.data! as! String)
             User.sharedInstance().AESKey = AESKey
         
-            print(httpModel.data!)
+            print(httpModel.data ?? "")
             
             self?.loadLoginData()
             
@@ -72,7 +72,7 @@ class LoginVC: UIViewController {
             [weak self]
             (httpModel:HttpModel) in
             
-            print(httpModel.data!)
+            print(httpModel.data ?? "")
             
         }) { (httpModel:HttpModel) in
             print(httpModel.message ?? "")
